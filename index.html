@@ -1,0 +1,2355 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JLPT N4/N5 Master - Đúng 150 Cấu Trúc Ngữ Pháp Chuẩn Đề Thi</title>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #151d30;
+      --panel-bg: #0f172a;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
+      --success: #22c55e;
+      --error: #ef4444;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --font-mono: "Fira Code", Consolas, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .quiz-container {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 760px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .category-badge {
+      background: #0369a1;
+      color: #e0f2fe;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .score-tracker {
+      font-size: 0.9rem;
+      color: var(--accent);
+      font-weight: 600;
+      font-family: var(--font-mono);
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+      transition: width 0.15s ease;
+    }
+
+    .question-section {
+      margin-bottom: 24px;
+    }
+
+    .question-title {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .grammar-structure {
+      font-size: 1.35rem;
+      font-weight: 700;
+      line-height: 1.4;
+      color: #fff;
+      background: var(--panel-bg);
+      padding: 16px;
+      border-radius: 8px;
+      border-left: 5px solid var(--accent);
+    }
+
+    .example-preview {
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      margin-top: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px dashed var(--border);
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .option-btn {
+      background: var(--panel-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 14px 16px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      line-height: 1.4;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--accent);
+      background: #1e293b;
+    }
+
+    .option-btn.correct {
+      background: rgba(34, 197, 94, 0.15) !important;
+      border-color: var(--success) !important;
+      color: var(--success) !important;
+      font-weight: bold;
+    }
+
+    .option-btn.wrong {
+      background: rgba(239, 68, 68, 0.15) !important;
+      border-color: var(--error) !important;
+      color: var(--error) !important;
+    }
+
+    .option-btn:disabled {
+      cursor: default;
+    }
+
+    .explanation-box {
+      background: #0b1329;
+      border: 1px solid #1e3a8a;
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 20px;
+      display: none;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+
+    .explanation-title {
+      font-weight: bold;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .footer-controls {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .next-btn {
+      background: var(--accent);
+      color: #0b0f19;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: none;
+    }
+
+    .next-btn:hover {
+      background: var(--accent-hover);
+    }
+
+    .result-screen {
+      text-align: center;
+      display: none;
+      padding: 20px 0;
+    }
+
+    .result-title {
+      font-size: 1.8rem;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .result-score {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+
+    .restart-btn {
+      background: var(--accent);
+      color: #0b0f19;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <div id="quizBlock">
+    <div class="header-bar">
+      <span class="category-badge" id="categoryBadge">Nhóm cấu trúc</span>
+      <span class="score-tracker" id="scoreTracker">Câu: 1/150</span>
+    </div>
+
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="question-section">
+      <div class="question-title">Cấu trúc / Cụm mẫu câu sau có ý nghĩa chuẩn xác là gì?</div>
+      <div class="grammar-structure" id="grammarText">...</div>
+      <div class="example-preview" id="exampleText">Ví dụ: ...</div>
+    </div>
+
+    <div class="options-grid" id="optionsGrid"></div>
+
+    <div class="explanation-box" id="explanationBox">
+      <div class="explanation-title">💡 Giải thích logic & Vị trí bài thi:</div>
+      <div id="explanationText">...</div>
+    </div>
+
+    <div class="footer-controls">
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Câu Tiếp Theo →</button>
+    </div>
+  </div>
+
+  <div class="result-screen" id="resultBlock">
+    <h2 class="result-title">Hoàn Thành Toàn Bộ 150 Cấu Trúc!</h2>
+    <p class="result-score" id="finalScoreText"></p>
+    <button class="restart-btn" onclick="restartQuiz()">Luyện Lại Từ Đầu</button>
+  </div>
+</div>
+
+<script>
+const quizData = [
+  // 1-10: NGHI VẤN TỪ & MẪU CÂU HỎI (N5-N4)
+  {
+    category: "Từ Nghi Vấn (Cách Thức)",
+    grammar: "どうやって (Ví dụ: 大学までどうやって行きますか)",
+    example: "VD: 市役所までどうやって行きますか。",
+    options: [
+      "Tại sao lại đến ủy ban?",
+      "ĐI BẰNG CÁCH NÀO / BẰNG PHƯƠNG TIỆN GÌ? (hỏi trình tự, lộ trình)",
+      "Mất bao nhiêu tiền để đến ủy ban?",
+      "Ủy ban mở cửa lúc mấy giờ?"
+    ],
+    correct: 1,
+    explain: "Minna Bài 16: どうやって = Hỏi về cách làm, phương tiện hoặc quy trình thực hiện cụ thể."
+  },
+  {
+    category: "Từ Nghi Vấn (Tính Chất)",
+    grammar: "どんな ＋ Danh từ (Ví dụ: どんな人 / どんな仕事)",
+    example: "VD: 富士山はどんな山ですか。",
+    options: [
+      "Núi Phú Sĩ cao bao nhiêu mét?",
+      "Là ngọn núi NHƯ THẾ NÀO? (hỏi tính chất, đặc điểm)",
+      "Núi Phú Sĩ nằm ở tỉnh nào?",
+      "Leo núi Phú Sĩ bằng cách nào?"
+    ],
+    correct: 1,
+    explain: "Minna Bài 8: どんな + N = Hỏi về chủng loại, đặc tính, hình dáng của danh từ."
+  },
+  {
+    category: "Từ Nghi Vấn (Cảm Nhận)",
+    grammar: "どう (Ví dụ: 日本の生活はどうですか)",
+    example: "VD: 新しい仕事はどうですか。",
+    options: [
+      "Công việc mới THẾ NÀO? (hỏi cảm nhận, đánh giá tổng quát)",
+      "Tại sao lại nhận công việc mới?",
+      "Làm công việc mới từ khi nào?",
+      "Làm công việc mới cùng ai?"
+    ],
+    correct: 0,
+    explain: "Minna Bài 8: どうですか = Thăm dò cảm xúc, trải nghiệm hoặc ấn tượng."
+  },
+  {
+    category: "Từ Nghi Vấn (Nguyên Nhân)",
+    grammar: "どうして / なぜ (Ví dụ: どうして遅刻したんですか)",
+    example: "VD: どうして昨日会社を休んだんですか。",
+    options: [
+      "Nghỉ làm bằng cách nào?",
+      "TẠI SAO / VÌ SAO lại nghỉ làm? (hỏi nguyên nhân)",
+      "Nghỉ làm trong bao nhiêu ngày?",
+      "Ai cho phép bạn nghỉ làm?"
+    ],
+    correct: 1,
+    explain: "Minna Bài 9 & 26: どうして / なぜ = Hỏi nguyên nhân, vế trả lời thường kèm 〜から / 〜んです."
+  },
+  {
+    category: "Từ Nghi Vấn (Thời Gian / Lượng)",
+    grammar: "どのくらい / どれくらい (Ví dụ: どのくらいかかりますか)",
+    example: "VD: ここから駅まで歩いてどのくらいかかりますか。",
+    options: [
+      "Đi ra ga bằng con đường nào?",
+      "MẤT KHOẢNG BAO LÂU / BAO NHIÊU? (ước lượng thời gian, chi phí)",
+      "Ai sẽ đi bộ ra nhà ga?",
+      "Nhà ga mở cửa lúc mấy giờ?"
+    ],
+    correct: 1,
+    explain: "Minna Bài 11: どのくらい = Ước lượng khoảng thời gian hoặc số lượng/chi phí."
+  },
+  {
+    category: "Từ Nghi Vấn (Lựa Chọn)",
+    grammar: "どの ＋ Danh từ (Ví dụ: どの傘ですか)",
+    example: "VD: 田中さんのロッカーはどのロッカーですか。",
+    options: [
+      "Tủ đồ này giá bao nhiêu?",
+      "Tủ đồ của Tanaka là CÁI TỦ NÀO? (lựa chọn trong 3 cái trở lên)",
+      "Tủ đồ mở bằng cách nào?",
+      "Tủ đồ màu sắc ra sao?"
+    ],
+    correct: 1,
+    explain: "Minna Bài 16: どの + N = Xác định 1 đối tượng cụ thể trong nhóm nhiều đồ vật."
+  },
+  {
+    category: "Từ Nghi Vấn (So Sánh 2)",
+    grammar: "どちら / どっち (Ví dụ: 紅茶とコーヒー、どちらがいいですか)",
+    example: "VD: 日本とベトナムと、どちらが暑いですか。",
+    options: [
+      "Tại sao cả hai nước đều nóng?",
+      "CÁI NÀO TRONG HAI CÁI? (so sánh hoặc chọn 1 trong 2)",
+      "Hai nước nóng vào tháng mấy?",
+      "Hai nước nóng như thế nào?"
+    ],
+    correct: 1,
+    explain: "Minna Bài 12: どちら (lịch sự) / どっち (thân mật) = So sánh giữa 2 đối tượng."
+  },
+  {
+    category: "Từ Nghi Vấn (Thời Điểm)",
+    grammar: "いつ (Ví dụ: いつ日本へ来ましたか)",
+    example: "VD: 次の試験はいつですか。",
+    options: [
+      "Kỳ thi tiếp theo diễn ra ở đâu?",
+      "KHI NÀO / BAO GIỜ có kỳ thi tiếp theo?",
+      "Kỳ thi tiếp theo có khó không?",
+      "Ai sẽ tham gia kỳ thi tiếp theo?"
+    ],
+    correct: 1,
+    explain: "Minna Bài 5: いつ = Từ để hỏi thời điểm chung (không cần trợ từ に đi kèm)."
+  },
+  {
+    category: "Từ Nghi Vấn (Nhân Vật)",
+    grammar: "だれ / どなた (Ví dụ: あの人はどなたですか)",
+    example: "VD: 会議室にいるのはだれですか。",
+    options: [
+      "Trong phòng họp có cái gì?",
+      "AI / VỊ NÀO đang ở trong phòng họp?",
+      "Phòng họp nằm ở tầng mấy?",
+      "Phòng họp dùng để làm gì?"
+    ],
+    correct: 1,
+    explain: "Minna Bài 1: だれ / どなた (kính ngữ) = Hỏi về danh tính con người."
+  },
+  {
+    category: "Từ Nghi Vấn (Vật / Việc)",
+    grammar: "何 (なに / なん) (Ví dụ: 何をしていますか)",
+    example: "VD: 朝ご飯に何を食べましたか。",
+    options: [
+      "Bạn ăn sáng ở đâu?",
+      "CÁI GÌ / ĐIỀU GÌ? (hỏi về đồ vật, nội dung hành động)",
+      "Bạn ăn sáng với ai?",
+      "Bạn ăn sáng lúc mấy giờ?"
+    ],
+    correct: 1,
+    explain: "Minna Bài 1 & 6: 何 = Hỏi về sự vật, nội dung hành động."
+  },
+
+  // 11-20: CÂU HỎI LỒNG & ĐIỀU KIỆN (NẾU... THÌ)
+  {
+    category: "Câu Hỏi Lồng",
+    grammar: "〜かどうか (Ví dụ: 行くかどうか分かりません)",
+    example: "VD: 明日雨が降るかどうか、分かりません。",
+    options: [
+      "Vì ngày mai trời mưa nên tôi không đi",
+      "CÓ... HAY KHÔNG (lồng câu hỏi không có từ để hỏi)",
+      "Nếu ngày mai trời mưa thì hãy báo tôi",
+      "Sau khi mưa tạnh thì tôi mới đi"
+    ],
+    correct: 1,
+    explain: "Minna Bài 40: Thể thông thường + かどうか = Lồng câu hỏi Yes/No thành mệnh đề phụ."
+  },
+  {
+    category: "Câu Hỏi Lồng",
+    grammar: "Từ nghi vấn ＋ か (Ví dụ: どこにあるか知っていますか)",
+    example: "VD: 鍵をどこに置いたか、忘れました。",
+    options: [
+      "Tôi đã quên mất chìa khóa ĐÃ ĐẶT Ở ĐÂU",
+      "Tôi không có chìa khóa nào ở đây",
+      "Hãy đặt chìa khóa ở bất cứ đâu",
+      "Tôi vừa tìm thấy chìa khóa"
+    ],
+    correct: 0,
+    explain: "Minna Bài 40: [Từ để hỏi] + thể ngắn + か = Lồng câu hỏi có từ nghi vấn vào câu chính."
+  },
+  {
+    category: "Điều Kiện Đa Năng",
+    grammar: "〜たら (Ví dụ: 安かったら買います / 駅に着いたら電話して)",
+    example: "VD: 時間があったら、映画を見に行きましょう。",
+    options: [
+      "Hễ có thời gian là mắt lại mỏi",
+      "NẾU... THÌ / SAU KHI XONG A THÌ LÀM B (điều kiện linh hoạt nhất)",
+      "Mặc dù có thời gian nhưng không đi",
+      "Bắt buộc phải có thời gian"
+    ],
+    correct: 1,
+    explain: "Minna Bài 25: V-たら = Dùng cho cả giả định 'Nếu' lẫn trình tự thời gian 'Sau khi'."
+  },
+  {
+    category: "Điều Kiện Logic",
+    grammar: "〜ば (Ví dụ: 安ければ買います)",
+    example: "VD: 練習すれば、上手になりますよ。",
+    options: [
+      "Sau khi giỏi rồi thì mới luyện tập",
+      "NẾU... THÌ (điều kiện cần thiết về mặt logic để dẫn tới kết quả)",
+      "Vì luyện tập nên bị mệt",
+      "Không cần luyện tập cũng giỏi"
+    ],
+    correct: 1,
+    explain: "Minna Bài 35: V-ば / A-ければ = Thiết lập tiền đề logic (Có A thì mới có B)."
+  },
+  {
+    category: "Điều Kiện Lời Khuyên",
+    grammar: "〜なら (Ví dụ: 日本語なら、田中先生がいい)",
+    example: "VD: カメラを買うなら、あの店がいいですよ。",
+    options: [
+      "Sau khi mua máy ảnh xong thì ghé quán đó",
+      "NẾU LÀ... / NẾU CÓ Ý ĐỊNH ĐÓ THÌ... (tiếp nhận chủ đề để đưa lời khuyên)",
+      "Hễ cứ vào quán là mua máy ảnh",
+      "Cấm không được mua máy ảnh ở đó"
+    ],
+    correct: 1,
+    explain: "Minna Bài 35: N / V-nguyên mẫu + なら = Đưa ra giải pháp tối ưu cho chủ đề đối phương vừa nêu."
+  },
+  {
+    category: "Điều Kiện Tất Yếu",
+    grammar: "〜と (Ví dụ: ボタンを押すと、水が出ます)",
+    example: "VD: この道をまっすぐ行くと、駅があります。",
+    options: [
+      "Nếu đi thẳng thì hãy ghé nhà ga nhé",
+      "HỄ CỨ... LÀ TẤT YẾU XẢY RA (quy luật tự nhiên, máy móc, chỉ đường 100%)",
+      "Sau khi vào ga thì hãy đi thẳng",
+      "Định đi thẳng nhưng đường bị chặn"
+    ],
+    correct: 1,
+    explain: "Minna Bài 23: V-ru + と = Quy luật tất yếu, chỉ đường, thao tác máy. Vế sau không chứa ý chí/mệnh lệnh."
+  },
+  {
+    category: "Mặc Dù / Bất Chấp",
+    grammar: "〜ても / 〜でも (Ví dụ: 雨が降っても行きます)",
+    example: "VD: 高くても、この辞書を買いたいです。",
+    options: [
+      "Vì đắt nên tôi không mua",
+      "DÙ... / CHO DÙ... ĐI NỮA THÌ VẪN (nghịch lý giả định)",
+      "Nếu đắt thì hãy giảm giá",
+      "Sau khi mua thì thấy đắt"
+    ],
+    correct: 1,
+    explain: "Minna Bài 25: V-ても / A-くても = Cho dù có điều kiện đó đi nữa thì hành động vẫn tiếp tục."
+  },
+  {
+    category: "Tương Phản Bất Mãn",
+    grammar: "〜のに (Ví dụ: 約束したのに来なかった)",
+    example: "VD: 薬を飲んだのに、熱が下がりません。",
+    options: [
+      "Vì uống thuốc nên hạ sốt",
+      "MẶC DÙ... THẾ MÀ... (kết quả trái ngược mong đợi, hàm ý trách móc/thất vọng)",
+      "Nếu uống thuốc thì sẽ hạ sốt",
+      "Sau khi hạ sốt mới uống thuốc"
+    ],
+    correct: 1,
+    explain: "Minna Bài 45: Thể thông thường + のに = Diễn tả sự nghịch lý thực tế kèm cảm xúc bất mãn."
+  },
+  {
+    category: "Nhưng (Văn Nói)",
+    grammar: "〜けど / 〜けれど (Ví dụ: 行きたいけど時間がない)",
+    example: "VD: 日本料理はおいしいけど、高いです。",
+    options: [
+      "NHƯNG / TUY NHIÊN (nối 2 vế tương phản hoặc mở đầu câu nhẹ nhàng)",
+      "Vì món Nhật ngon nên tôi ăn",
+      "Nếu món Nhật ngon thì hãy mua",
+      "Món Nhật vừa rẻ vừa dở"
+    ],
+    correct: 0,
+    explain: "N5/N4: けど = Liên từ nối vế tương phản hoặc mở đầu câu chuyện trong văn nói."
+  },
+  {
+    category: "Nhưng (Văn Lịch Sự)",
+    grammar: "〜が (Ví dụ: 失礼ですが、お名前は？)",
+    example: "VD: すみませんが、手伝ってください。",
+    options: [
+      "NHƯNG / MỞ ĐẦU LỊCH SỰ (dùng trong văn viết hoặc giao tiếp trang trọng)",
+      "Vì bạn không giúp nên tôi xin lỗi",
+      "Nếu bạn giúp thì tôi không cảm ơn",
+      "Cấm không được giúp đỡ"
+    ],
+    correct: 0,
+    explain: "Minna Bài 8 & 14: が = Nối 2 vế đối lập hoặc làm đệm mở đầu câu lịch sự."
+  },
+
+  // 21-30: TRỢ TỪ GIỚI HẠN & LIỆT KÊ
+  {
+    category: "Trợ Từ Giới Hạn",
+    grammar: "〜しか〜ない (Ví dụ: 千円しかありません)",
+    example: "VD: 忙しくて、3時間しか寝られませんでした。",
+    options: [
+      "Ngủ suốt mười tiếng đồng hồ",
+      "CHỈ... (mang sắc thái ít ỏi, tiếc nuối, luôn đi với phủ định)",
+      "Không ngủ được phút nào",
+      "Vừa ngủ vừa làm việc"
+    ],
+    correct: 1,
+    explain: "Minna Bài 27: N + しか + V-phủ định = Chỉ có duy nhất (hàm ý thiếu thốn, không đủ)."
+  },
+  {
+    category: "Trợ Từ Giới Hạn",
+    grammar: "〜だけ (Ví dụ: ひらがなだけ書けます)",
+    example: "VD: 好きなものだけ食べてはいけません。",
+    options: [
+      "CHỈ... (giới hạn đơn thuần khách quan, đi được cả khẳng định lẫn phủ định)",
+      "Ăn tất cả mọi thứ",
+      "Không được ăn bất cứ món nào",
+      "Vừa ăn vừa xem tivi"
+    ],
+    correct: 0,
+    explain: "Minna Bài 11 & 27: だけ = Giới hạn số lượng/đối tượng thuần túy."
+  },
+  {
+    category: "Trợ Từ Toàn Bộ",
+    grammar: "〜ばかり (Ví dụ: 遊んでばかりいる)",
+    example: "VD: 弟は漫画を読んでばかりいます。",
+    options: [
+      "Em trai không bao giờ đọc truyện",
+      "TOÀN LÀ / CHỈ TOÀN LÀ... (lặp đi lặp lại hành động, mang hàm ý phê phán)",
+      "Em trai vừa đọc xong truyện",
+      "Em trai bắt tôi đọc truyện"
+    ],
+    correct: 1,
+    explain: "N4: V-て + ばかりいる = Suốt ngày chỉ toàn làm một việc (thường mang tính tiêu cực)."
+  },
+  {
+    category: "Trợ Từ Gợi Ý",
+    grammar: "〜でも (Ví dụ: お茶でも飲みませんか)",
+    example: "VD: ちょっと映画でも見に行きませんか。",
+    options: [
+      "Mặc dù xem phim nhưng vẫn chán",
+      "HAY LÀ... GÌ ĐÓ (đưa ra một ví dụ gợi ý tiêu biểu, nhẹ nhàng)",
+      "Chỉ xem duy nhất một bộ phim",
+      "Cấm không được xem phim"
+    ],
+    correct: 1,
+    explain: "N + でも = Đưa ra một ví dụ gợi ý mềm mỏng (Uống trà hay gì đó không?)."
+  },
+  {
+    category: "Liệt Kê Lý Do",
+    grammar: "〜し、〜し (Ví dụ: 安いし、おいしいし)",
+    example: "VD: この店は料理もおいしいし、値段も安いし、人気があります。",
+    options: [
+      "VỪA... LẠI VỪA... (liệt kê nhiều hơn một nguyên nhân, lý do)",
+      "Nếu món ăn ngon thì hãy giảm giá",
+      "Sau khi ăn xong thì thấy giá rẻ",
+      "Quán này thức ăn dở và đắt"
+    ],
+    correct: 0,
+    explain: "Minna Bài 28: Thể thông thường + し = Nêu từ 2 lý do trở lên để bổ trợ nhận định."
+  },
+  {
+    category: "Mở Rộng Thêm",
+    grammar: "〜だけでなく〜も (Ví dụ: 英語だけでなく日本語も)",
+    example: "VD: 彼は歌だけでなく、ダンスも上手です。",
+    options: [
+      "Anh ấy chỉ biết hát",
+      "KHÔNG CHỈ... MÀ CẢ... CŨNG... (nêu thêm một đối tượng khác nữa)",
+      "Anh ấy không biết hát lẫn nhảy",
+      "Hát dễ hơn nhảy"
+    ],
+    correct: 1,
+    explain: "N / Thể ngắn + だけでなく: Khẳng định bao hàm cả hai đối tượng."
+  },
+  {
+    category: "Hạn Chót",
+    grammar: "〜までに (Ví dụ: 5時までに提出してください)",
+    example: "VD: 今週の金曜日までにレポートを出してください。",
+    options: [
+      "Nộp báo cáo liên tục suốt từ giờ đến thứ Sáu",
+      "TRƯỚC... / MUỘN NHẤT LÀ... (hạn chót phải hoàn thành hành động)",
+      "Bắt đầu nộp báo cáo từ thứ Sáu",
+      "Sau thứ Sáu mới được nộp"
+    ],
+    correct: 1,
+    explain: "Minna Bài 17: N (thời gian) / V-ru + までに = Thời hạn chót (Deadline)."
+  },
+  {
+    category: "Duy Trì Liên Tục",
+    grammar: "〜まで (Ví dụ: 5時まで待つ)",
+    example: "VD: 雨がやむまで、ここで待っています。",
+    options: [
+      "Muộn nhất là khi tạnh mưa phải đi",
+      "CHO ĐẾN KHI... (hành động duy trì liên tục suốt khoảng thời gian)",
+      "Sau khi mưa tạnh mới đến đây",
+      "Vì mưa nên không chờ nữa"
+    ],
+    correct: 1,
+    explain: "V-ru / N + まで = Diễn tả hành động duy trì liên tục kéo dài suốt mốc thời gian."
+  },
+  {
+    category: "Liệt Kê Tiêu Biểu",
+    grammar: "〜や〜など (Ví dụ: パンや卵などを買う)",
+    example: "VD: 机の上に本やノートなどがあります。",
+    options: [
+      "Trên bàn chỉ có duy nhất 1 cuốn sách",
+      "NHƯ LÀ... VÀ... (liệt kê không đầy đủ các đồ vật tiêu biểu)",
+      "Trên bàn không có gì cả",
+      "Sách và vở bị vứt đi rồi"
+    ],
+    correct: 1,
+    explain: "Minna Bài 10: N1 や N2 など = Liệt kê đại diện một vài vật trong một nhóm."
+  },
+  {
+    category: "Liệt Kê Khẩu Ngữ",
+    grammar: "〜とか〜とか (Ví dụ: 肉とか魚とか)",
+    example: "VD: 休日は映画を見に行くとか、買い物をするとかします。",
+    options: [
+      "CẤM KHÔNG ĐƯỢC làm việc này việc kia",
+      "NHƯ LÀ... HOẶC LÀ... (liệt kê danh từ hoặc hành động trong văn nói)",
+      "Sau khi xem phim thì bắt buộc phải mua sắm",
+      "Không xem phim cũng không mua sắm"
+    ],
+    correct: 1,
+    explain: "N4: 〜とか〜とか = Liệt kê ví dụ hành động hoặc danh từ mang phong cách khẩu ngữ."
+  },
+
+  // 31-40: CHO - NHẬN, XIN PHÉP & NHỜ VẢ
+  {
+    category: "Cho - Nhận",
+    grammar: "〜てもらう (Ví dụ: 先生に教えてもらう)",
+    example: "VD: 課長に書類を直してもらいました。",
+    options: [
+      "Tôi sửa tài liệu giúp tổ trưởng",
+      "TÔI ĐƯỢC / NHỜ AI ĐÓ LÀM GIÚP CHO MÌNH",
+      "Tổ trưởng bắt tôi tự sửa",
+      "Tôi từ chối lời tổ trưởng"
+    ],
+    correct: 1,
+    explain: "Minna Bài 24: [Tôi は] + [Người に] + V-てもらう = Nhờ/được ai đó làm giúp."
+  },
+  {
+    category: "Cho - Nhận",
+    grammar: "〜てくれる (Ví dụ: 友達が教えてくれる)",
+    example: "VD: 田中さんが傘を貸してくれました。",
+    options: [
+      "Tôi cho Tanaka mượn dù",
+      "AI ĐÓ (Tanaka) CHỦ ĐỘNG LÀM GIÚP CHO TÔI (cho tôi mượn dù)",
+      "Tôi bắt Tanaka đi mua dù",
+      "Tanaka làm mất cây dù"
+    ],
+    correct: 1,
+    explain: "Minna Bài 24: [Người khác が] + (私に) + V-てくれる = Người khác làm việc tốt cho mình."
+  },
+  {
+    category: "Cho - Nhận",
+    grammar: "〜てあげる (Ví dụ: 妹に買ってあげる)",
+    example: "VD: 友達に駅までの道を教えてあげました。",
+    options: [
+      "Tôi được bạn chỉ đường cho",
+      "TÔI LÀM VIỆC GÌ ĐÓ GIÚP ĐỠ ĐỐI PHƯƠNG (chỉ đường cho bạn)",
+      "Bạn tôi tự tìm đường ra ga",
+      "Tôi bắt bạn phải đi ra ga"
+    ],
+    correct: 1,
+    explain: "Minna Bài 24: [Tôi は/が] + [Người に] + V-てあげる = Mình làm việc tốt cho đối phương."
+  },
+  {
+    category: "Đề Nghị Giúp Đỡ",
+    grammar: "〜てあげましょうか",
+    example: "VD: 荷物を持ってあげましょうか。",
+    options: [
+      "Bạn xách đồ giúp tôi nhé?",
+      "TÔI LÀM GIÚP BẠN NHÉ? (chủ động đề nghị giúp)",
+      "Tôi muốn ai đó xách đồ giúp",
+      "Cấm động vào hành lý"
+    ],
+    correct: 1,
+    explain: "Minna Bài 14: V-てあげましょうか = Ngỏ lời giúp đỡ người khác. Không có くれましょうか."
+  },
+  {
+    category: "Xin Phép Bản Thân",
+    grammar: "〜てもいいですか",
+    example: "VD: ここに座ってもいいですか。",
+    options: [
+      "Bạn ngồi ở đây giúp tôi nhé?",
+      "TÔI LÀM VIỆC NÀY CÓ ĐƯỢC PHÉP KHÔNG? (xin phép cho bản thân)",
+      "Không được phép ngồi ở đây",
+      "Đã ngồi ở đây từ lâu rồi"
+    ],
+    correct: 1,
+    explain: "Minna Bài 15: V-てもいいですか = Xin phép cho bản thân thực hiện hành động."
+  },
+  {
+    category: "Nhờ Vả Thân Mật",
+    grammar: "〜てくれませんか",
+    example: "VD: 窓を開けてくれませんか。",
+    options: [
+      "Tôi mở cửa sổ giúp bạn nhé?",
+      "BẠN LÀM GIÚP TÔI VIỆC NÀY ĐƯỢC KHÔNG? (nhờ vả ngang hàng)",
+      "Tôi có được mở cửa không?",
+      "Cùng mở cửa sổ nào"
+    ],
+    correct: 1,
+    explain: "Minna Bài 26: V-てくれませんか = Nhờ đối phương làm việc gì cho mình."
+  },
+  {
+    category: "Nhờ Vả Lịch Sự",
+    grammar: "〜てもらえませんか",
+    example: "VD: もう一度言ってえもらえませんか。",
+    options: [
+      "Tôi nói lại lần nữa được không?",
+      "BẠN CÓ THỂ LÀM GIÚP TÔI ĐƯỢC KHÔNG? (lịch sự hơn てくれませんか)",
+      "Đừng nói lại lần nào nữa",
+      "Hãy nói thật to lên"
+    ],
+    correct: 1,
+    explain: "Minna Bài 26: V-てもらえませんか = Thể khả năng của もらう ở thể phủ định lịch sự."
+  },
+  {
+    category: "Nhờ Vả Trang Trọng",
+    grammar: "〜ていただけませんか",
+    example: "VD: この書類を見ていただけませんか。",
+    options: [
+      "Tôi xem tài liệu cho thầy nhé",
+      "KÍNH XIN BỀ TRÊN LÀM GIÚP TÔI CÓ ĐƯỢC KHÔNG? (kính ngữ trang trọng)",
+      "Thầy bắt tôi phải xem tài liệu",
+      "Tôi tự xem tài liệu một mình"
+    ],
+    correct: 1,
+    explain: "Minna Bài 26: Kính ngữ cao cấp của もらう (いただく)."
+  },
+  {
+    category: "Xin Lời Khuyên",
+    grammar: "〜たらいいですか (Ví dụ: どうしたらいいですか)",
+    example: "VD: どこで切符を買ったらいいですか。",
+    options: [
+      "Sau khi mua vé thì tôi mới hỏi",
+      "TÔI NÊN LÀM GÌ THÌ TỐT? (hỏi xin lời khuyên/hướng dẫn phương án tối ưu)",
+      "Nếu mua vé thì rất tốt",
+      "Không cần mua vé cũng được"
+    ],
+    correct: 1,
+    explain: "Minna Bài 26: [Từ để hỏi] + V-たらいいですか = Hỏi xin lời khuyên xử lý tình huống."
+  },
+  {
+    category: "Cho Cấp Dưới / Động Vật",
+    grammar: "〜てやる (Ví dụ: 犬に餌をやってあげる / やる)",
+    example: "VD: 弟におもちゃを直してやりました。",
+    options: [
+      "Em trai sửa đồ chơi cho tôi",
+      "LÀM VIỆC GÌ CHO NGƯỜI DƯỚI / CON VẬT (dạng hạ thấp của あげる)",
+      "Em trai bắt tôi mua đồ chơi",
+      "Đồ chơi bị hỏng hoàn toàn"
+    ],
+    correct: 1,
+    explain: "Minna Bài 41: V-てやる = Làm gì giúp cho người nhỏ tuổi hơn hẳn, con vật hoặc cây cối."
+  },
+
+  // 41-50: BỊ ĐỘNG, SAI KHIẾN & BỊ ĐỘNG SAI KHIẾN
+  {
+    category: "Thể Bị Động",
+    grammar: "〜れる / 〜られる (Ví dụ: 褒められる / 叱られる)",
+    example: "VD: 私は先生に褒められました。",
+    options: [
+      "Tôi đã khen ngợi thầy giáo",
+      "TÔI BỊ / ĐƯỢC NGƯỜI KHÁC TÁC ĐỘNG VÀO (được thầy giáo khen)",
+      "Tôi bắt thầy giáo phải khen mình",
+      "Tôi nhờ thầy khen người khác"
+    ],
+    correct: 1,
+    explain: "Minna Bài 37: Thể bị động (Ukemi) = Chủ ngữ tiếp nhận hành động từ người khác."
+  },
+  {
+    category: "Bị Động Gián Tiếp (Phiền Toái)",
+    grammar: "〜に〜を〜られる (Ví dụ: 雨に降られる / 足を踏まれる)",
+    example: "VD: 電車で隣の人に足を踏まれました。",
+    options: [
+      "Tôi giẫm lên chân người khác",
+      "BỊ NGƯỜI KHÁC LÀM PHIỀN / GÂY THIỆT HẠI ĐẾN MÌNH",
+      "Tôi nhờ người bên cạnh giẫm chân",
+      "Không ai bị đau chân cả"
+    ],
+    correct: 1,
+    explain: "Minna Bài 37: Bị động gián tiếp thể hiện sự khó chịu, phiền toái mà người nói phải gánh chịu."
+  },
+  {
+    category: "Thể Sai Khiến",
+    grammar: "〜せる / 〜させる (Ví dụ: 行かせる / 食べさせる)",
+    example: "VD: 先生は学生に宿題をたくさんさせました。",
+    options: [
+      "Học sinh bắt thầy giáo làm bài tập",
+      "CHO PHÉP HOẶC BẮT BUỘC AI ĐÓ LÀM VIỆC GÌ",
+      "Thầy giáo được học sinh giúp làm bài",
+      "Học sinh tự nguyện làm bài tập"
+    ],
+    correct: 1,
+    explain: "Minna Bài 48: Thể sai khiến (Shieki) = Ép buộc hoặc cho phép người dưới làm gì."
+  },
+  {
+    category: "Sai Khiến + Xin Phép",
+    grammar: "〜させてください / 〜させていただけませんか",
+    example: "VD: 私に意見を言わせてください。",
+    options: [
+      "Hãy nói ý kiến của bạn đi",
+      "XIN HÃY CHO PHÉP TÔI ĐƯỢC LÀM VIỆC NÀY (cho phép tôi phát biểu)",
+      "Tôi bắt người khác phải phát biểu",
+      "Cấm không được nói ý kiến"
+    ],
+    correct: 1,
+    explain: "Minna Bài 48: V-させて + ください = Xin phép bề trên cho bản thân mình được làm."
+  },
+  {
+    category: "Bị Động Sai Khiến",
+    grammar: "〜させられる / 〜される (Ví dụ: 待たされる / 歌わされる)",
+    example: "VD: カラオケで無理やり歌を歌わされました。",
+    options: [
+      "Tôi tự nguyện xin lên hát",
+      "TÔI BỊ BẮT BUỘC PHẢI LÀM VIỆC MÌNH KHÔNG THÍCH",
+      "Tôi ép người khác phải hát",
+      "Tôi thích hát karaoke nhất"
+    ],
+    correct: 1,
+    explain: "N4: Bị động sai khiến (Shieki-Ukemi) = Bị ép làm điều miễn cưỡng."
+  },
+  {
+    category: "Thể Khả Năng",
+    grammar: "〜える / 〜られる (Ví dụ: 読める / 食べられる)",
+    example: "VD: 日本語の新聞が読めます。",
+    options: [
+      "Bắt buộc phải đọc báo tiếng Nhật",
+      "CÓ KHẢ NĂNG / CÓ THỂ LÀM ĐƯỢC VIỆC GÌ (đổi trợ từ を thành が)",
+      "Đang đọc báo tiếng Nhật",
+      "Cấm đọc báo tiếng Nhật"
+    ],
+    correct: 1,
+    explain: "Minna Bài 27: Thể khả năng (Kanoukei) = Biểu thị năng lực hoặc điều kiện cho phép làm được."
+  },
+  {
+    category: "Thể Ý Chí (Ngắn)",
+    grammar: "Thể Ý Chí (V-o / V-you, VD: 行こう / 食べよう)",
+    example: "VD: 今日は早く帰ろう。",
+    options: [
+      "CÙNG NHAU LÀM / TÔI SẼ LÀM (dạng thân mật của 〜ましょう)",
+      "Không được phép về sớm",
+      "Vừa mới về nhà xong",
+      "Bị ép phải về nhà"
+    ],
+    correct: 0,
+    explain: "Minna Bài 31: Thể ý chí = Dùng để rủ rê bạn bè thân mật hoặc tự nhủ ý định."
+  },
+  {
+    category: "Thể Ý Chí + Dự Định",
+    grammar: "〜ようと思っています (Ví dụ: 留学しようと思っています)",
+    example: "VD: 会社を辞めようと思っています。",
+    options: [
+      "Tôi nghĩ là sếp sẽ nghỉ việc",
+      "ĐANG ẤP Ủ Ý ĐỊNH SẼ LÀM GÌ (nung nấu từ trước)",
+      "Vừa mới nghỉ việc hôm qua",
+      "Cấm không được nghỉ việc"
+    ],
+    correct: 1,
+    explain: "Minna Bài 31: Thể ý chí + と思っています = Dự tính đã có trong suy nghĩ từ trước."
+  },
+  {
+    category: "Dự Định Chắc Chắn",
+    grammar: "〜つもりだ (Ví dụ: 買うつもりです)",
+    example: "VD: 来年、日本へ行くつもりです。",
+    options: [
+      "Đã đi Nhật từ năm ngoái",
+      "DỰ ĐỊNH / QUYẾT TÂM SẼ LÀM GÌ (ý chí kiên quyết)",
+      "Có lẽ sẽ không đi Nhật",
+      "Bị ép phải đi Nhật"
+    ],
+    correct: 1,
+    explain: "Minna Bài 31: V-ru / V-nai + つもりだ = Ý định có tính quyết tâm của bản thân."
+  },
+  {
+    category: "Kế Hoạch Khách Quan",
+    grammar: "〜予定だ (Ví dụ: 出発する予定です)",
+    example: "VD: 会議は午後3時に終わる予定です。",
+    options: [
+      "Tôi muốn cuộc họp kết thúc lúc 3 giờ",
+      "THEO LỊCH TRÌNH / KẾ HOẠCH ĐÃ ĐỊNH LÀ...",
+      "Cuộc họp đã xong lúc 3 giờ",
+      "Hủy cuộc họp lúc 3 giờ"
+    ],
+    correct: 1,
+    explain: "Minna Bài 31: V-ru / N の + 予定だ = Kế hoạch lịch trình khách quan đã được lên lịch."
+  },
+
+  // 51-60: MỆNH LỆNH, CẤM CHỈ & LỜI NHẮN
+  {
+    category: "Thể Mệnh Lệnh",
+    grammar: "Thể Mệnh Lệnh (V-e / V-ro, VD: 走れ / 止めろ)",
+    example: "VD: 早く起きろ！遅刻するぞ！",
+    options: [
+      "Có thể dậy sớm",
+      "HÃY DẬY MAU LÊN! (ra lệnh dứt khoát, khẩn cấp)",
+      "Cấm không được dậy",
+      "Chuẩn bị thức dậy"
+    ],
+    correct: 1,
+    explain: "Minna Bài 33: Thể mệnh lệnh = Ra lệnh nghiêm khắc, cổ vũ hoặc tình huống nguy cấp."
+  },
+  {
+    category: "Thể Cấm Chỉ",
+    grammar: "Thể Cấm Chỉ (V-ru + な, VD: 触るな / 入るな)",
+    example: "VD: ここに入るな！危険！",
+    options: [
+      "Hãy bước vào đây đi",
+      "CẤM KHÔNG ĐƯỢC LÀM! (cấm chỉ tuyệt đối)",
+      "Có thể bước vào tự do",
+      "Vừa bước vào xong"
+    ],
+    correct: 1,
+    explain: "Minna Bài 33: V-ru + な = Cấm đoán dứt khoát trên biển báo hoặc mệnh lệnh nghiêm khắc."
+  },
+  {
+    category: "Mệnh Lệnh Nhẹ Nhàng",
+    grammar: "〜なさい (Ví dụ: 食べなさい / 勉強しなさい)",
+    example: "VD: 早く宿題をしなさい。",
+    options: [
+      "Không cần làm bài tập cũng được",
+      "HÃY LÀM ĐI (mệnh lệnh từ cha mẹ bảo con cái hoặc thầy cô bảo học sinh)",
+      "Cấm làm bài tập",
+      "Tôi đã làm xong bài tập"
+    ],
+    correct: 1,
+    explain: "V-masu (bỏ masu) + なさい = Lời sai bảo mang tính giáo dục gia đình/học đường."
+  },
+  {
+    category: "Nhờ Chuyển Lời",
+    grammar: "〜と伝えていただけませんか",
+    example: "VD: 田中さんに「電話をください」と伝えていただけませんか。",
+    options: [
+      "Tanaka nhắn bảo tôi gọi lại",
+      "XIN NHẮN GIÚP TÔI VỚI AI ĐÓ LÀ... (nhờ truyền đạt lời nhắn lịch sự)",
+      "Tôi cấm Tanaka gọi điện",
+      "Cuộc gọi đã hoàn tất"
+    ],
+    correct: 1,
+    explain: "Minna Bài 33: [Nội dung] + と伝えていただけませんか = Nhờ người thứ 3 nhắn lại hộ."
+  },
+  {
+    category: "Định Nghĩa Ý Nghĩa",
+    grammar: "〜という意味だ (Ví dụ: 「立入禁止」はどういう意味ですか)",
+    example: "VD: 「立入禁止」は入ってはいけないという意味です。",
+    options: [
+      "Nghĩa là được phép vào tự do",
+      "CÓ NGHĨA LÀ... (giải thích định nghĩa khái niệm, ký hiệu)",
+      "Nghĩa là hãy cẩn thận khi bước vào",
+      "Nghĩa là đã vào bên trong rồi"
+    ],
+    correct: 1,
+    explain: "Minna Bài 33: 〜という意味です = Giải thích nội hàm định nghĩa của từ ngữ."
+  },
+  {
+    category: "Trích Dẫn Lời Nói",
+    grammar: "〜と言う (Ví dụ: 田中さんは明日来ると言いました)",
+    example: "VD: 彼は「もう疲れた」と言いました。",
+    options: [
+      "Anh ấy bảo tôi phải mệt",
+      "TRÍCH DẪN: NÓI LÀ... (thuật lại lời nói)",
+      "Tôi nói với anh ấy là tôi mệt",
+      "Anh ấy không nói gì cả"
+    ],
+    correct: 1,
+    explain: "Minna Bài 21: 〜と言う = Trích dẫn trực tiếp hoặc gián tiếp lời phát biểu."
+  },
+  {
+    category: "Yêu Cầu Lịch Sự",
+    grammar: "〜てください (Ví dụ: 書いてください)",
+    example: "VD: ここに名前を書いてください。",
+    options: [
+      "XIN HÃY LÀM VIỆC GÌ (yêu cầu, nhờ vả lịch sự thông thường)",
+      "Tôi muốn viết tên vào đây",
+      "Cấm không được viết tên",
+      "Tôi đã viết tên xong rồi"
+    ],
+    correct: 0,
+    explain: "Minna Bài 14: V-てください = Đề nghị người nghe thực hiện hành động."
+  },
+  {
+    category: "Yêu Cầu Đừng Làm",
+    grammar: "〜ないでください (Ví dụ: 触らないでください)",
+    example: "VD: ここに車を止めないでください。",
+    options: [
+      "Hãy đỗ xe ở đây",
+      "XIN ĐỪNG LÀM VIỆC GÌ (yêu cầu không làm lịch sự)",
+      "Được phép đỗ xe tự do",
+      "Tôi chuẩn bị đỗ xe"
+    ],
+    correct: 1,
+    explain: "Minna Bài 17: V-ないでください = Khuyên hoặc yêu cầu đối phương đừng làm việc đó."
+  },
+  {
+    category: "Rủ Rê Lịch Sự",
+    grammar: "〜ませんか (Ví dụ: 一緒に行きませんか)",
+    example: "VD: 一緒にお昼ご飯を食べませんか。",
+    options: [
+      "CÙNG LÀM VIỆC NÀY KHÔNG? (lời mời rủ lịch sự, tôn trọng ý đối phương)",
+      "Tại sao bạn lại ăn cơm trưa?",
+      "Tôi không muốn ăn cơm trưa",
+      "Bạn đã ăn cơm trưa chưa?"
+    ],
+    correct: 0,
+    explain: "Minna Bài 6: V-ませんか = Lời mời rủ người nghe cùng tham gia."
+  },
+  {
+    category: "Cùng Làm Nào",
+    grammar: "〜ましょう (Ví dụ: 休みましょう)",
+    example: "VD: ちょっと休みましょう。",
+    options: [
+      "CHÚNG TA CÙNG NGHỈ NGƠI NÀO! (đề xuất cùng hành động mang tính chủ động)",
+      "Tôi muốn nghỉ một mình",
+      "Không được phép nghỉ ngơi",
+      "Đã nghỉ ngơi từ lâu"
+    ],
+    correct: 0,
+    explain: "Minna Bài 6: V-ましょう = Rủ rê, thúc giục cùng làm một việc gì đó."
+  },
+
+  // 61-70: KÍNH NGỮ & KHIÊM NHƯỜNG NGỮ (MINNA 49 & 50)
+  {
+    category: "Tôn Kính Ngữ Quy Tắc",
+    grammar: "お〜になります / ご〜になります",
+    example: "VD: 社長は新聞をお読みになりました。",
+    options: [
+      "Tôi đọc báo cho giám đốc nghe",
+      "BỀ TRÊN / GIÁM ĐỐC ĐÃ LÀM GÌ (nâng cao hành vi của bề trên)",
+      "Giám đốc bắt tôi đọc báo",
+      "Tôi cấm giám đốc đọc báo"
+    ],
+    correct: 1,
+    explain: "Minna Bài 49: お + V-masu (bỏ masu) + になる = Tôn kính ngữ quy tắc cho bề trên."
+  },
+  {
+    category: "Tôn Kính Ngữ Bất Quy Tắc",
+    grammar: "いらっしゃいます / おっしゃいます / なさいます",
+    example: "VD: 部長は何とおっしゃいましたか。",
+    options: [
+      "Tôi đã nói gì với trưởng phòng?",
+      "TRƯỞNG PHÒNG ĐÃ NÓI GÌ Ạ? (Tôn kính ngữ của 言う)",
+      "Trưởng phòng không nói câu nào",
+      "Tôi bắt trưởng phòng phải nói"
+    ],
+    correct: 1,
+    explain: "Minna Bài 49: Động từ tôn kính ngữ đặc biệt (言う -> おっしゃる, 行く/来る/いる -> いらっしゃる)."
+  },
+  {
+    category: "Tôn Kính Ngữ Nhìn",
+    grammar: "ご覧になります (ごらんになります)",
+    example: "VD: この資料をご覧になりましたか。",
+    options: [
+      "Tôi đã xem tài liệu này rồi",
+      "NGÀI ĐÃ XEM CÁI NÀY CHƯA Ạ? (Tôn kính ngữ của 見る)",
+      "Cấm không được xem tài liệu",
+      "Hãy đưa tài liệu cho tôi xem"
+    ],
+    correct: 1,
+    explain: "Minna Bài 49: ご覧になる = Tôn kính ngữ của 見る (xem, nhìn)."
+  },
+  {
+    category: "Tôn Kính Ngữ Ăn / Uống",
+    grammar: "召し上がります (めしあがります)",
+    example: "VD: どうぞ、温かいうちに召し上がってください。",
+    options: [
+      "Tôi đã ăn hết rồi",
+      "XIN MỜI NGÀI DÙNG BỮA / ĂN UỐNG (Tôn kính ngữ của 食べる / 飲む)",
+      "Cấm không được ăn",
+      "Món ăn đã nguội ngắt"
+    ],
+    correct: 1,
+    explain: "Minna Bài 49: 召し上がる = Tôn kính ngữ của 食べる và 飲む."
+  },
+  {
+    category: "Khiêm Nhường Ngữ Quy Tắc",
+    grammar: "お〜します / お〜いたします",
+    example: "VD: 重そうですね。お荷物をお持ちします。",
+    options: [
+      "Xin ngài hãy tự mang hành lý",
+      "TÔI XIN PHÉP ĐƯỢC LÀM GIÚP BỀ TRÊN (hạ thấp mình để tôn kính đối phương)",
+      "Hành lý này quá nặng tôi không mang",
+      "Ai đó đã mang hành lý giúp tôi"
+    ],
+    correct: 1,
+    explain: "Minna Bài 50: お + V-masu (bỏ masu) + する = Khiêm nhường ngữ cho hành động của chính mình."
+  },
+  {
+    category: "Khiêm Nhường Ngữ Đi / Đến",
+    grammar: "参ります (まいります)",
+    example: "VD: 明日の朝9時に会社へ参ります。",
+    options: [
+      "Ngài hãy đến công ty lúc 9 giờ",
+      "TÔI XIN PHÉP ĐẾN ĐÓ LÚC 9 GIỜ (khiêm nhường ngữ của 行く/来る)",
+      "Tôi không đi đến công ty",
+      "Công ty đóng cửa lúc 9 giờ"
+    ],
+    correct: 1,
+    explain: "Minna Bài 50: 参る = Khiêm nhường ngữ đặc biệt của 行く và 来る."
+  },
+  {
+    category: "Khiêm Nhường Ngữ Nói",
+    grammar: "申します (もうします)",
+    example: "VD: 私はグエンと申します。",
+    options: [
+      "Tên của bạn là gì?",
+      "TÔI TÊN LÀ... / TÔI XIN NÓI LÀ... (khiêm nhường ngữ của 言う)",
+      "Tôi không có tên",
+      "Hãy gọi tôi là thầy giáo"
+    ],
+    correct: 1,
+    explain: "Minna Bài 50: 申す = Khiêm nhường ngữ của 言う."
+  },
+  {
+    category: "Khiêm Nhường Ngữ Làm",
+    grammar: "いたします (Ví dụ: 私がいたします)",
+    example: "VD: その仕事は私がいたします。",
+    options: [
+      "Xin ngài hãy làm việc đó",
+      "TÔI XIN PHÉP ĐƯỢC LÀM VIỆC ĐÓ (khiêm nhường ngữ của する)",
+      "Tôi không làm được đâu",
+      "Việc đó đã hoàn thành rồi"
+    ],
+    correct: 1,
+    explain: "Minna Bài 50: いたす = Khiêm nhường ngữ của する."
+  },
+  {
+    category: "Khiêm Nhường Ngữ Biết",
+    grammar: "存じております (ぞんじております)",
+    example: "VD: その方のお名前は存じております。",
+    options: [
+      "Tôi không biết người đó là ai",
+      "TÔI CÓ BIẾT ĐIỀU ĐÓ Ạ (khiêm nhường ngữ của 知っています)",
+      "Người đó biết tên của tôi",
+      "Hãy nói cho tôi biết tên người đó"
+    ],
+    correct: 1,
+    explain: "Minna Bài 50: 存じる = Khiêm nhường ngữ của 知る (biết) và 思う (nghĩ)."
+  },
+  {
+    category: "Lịch Sự Ngữ Có",
+    grammar: "ございます (Ví dụ: お手洗いはあちらにございます)",
+    example: "VD: 電話はあちらにございます。",
+    options: [
+      "Ở đằng kia không có điện thoại",
+      "CÓ Ở ĐẰNG KIA Ạ (thể lịch sự trang trọng của あります)",
+      "Hãy đi đến đằng kia gọi điện",
+      "Điện thoại bị hỏng rồi"
+    ],
+    correct: 1,
+    explain: "Minna Bài 50: ございます = Cách nói trang trọng (Teineigo) của あります."
+  },
+
+  // 71-80: GIẢI THÍCH LÝ DO & BIẾN ĐỔI TRẠNG THÁI
+  {
+    category: "Nhấn Mạnh Lý Do / Thắc Mắc",
+    grammar: "〜んです / 〜のだ (Ví dụ: 頭が痛いんです)",
+    example: "VD: どうして遅刻したんですか。…電車が止まったんです。",
+    options: [
+      "Vì tàu điện chạy rất nhanh",
+      "VÌ... ĐẤY Ạ (nhấn mạnh nguyên nhân, giãi bày lý do hoặc tò mò hỏi han)",
+      "Nếu tàu dừng thì tốt",
+      "Tàu điện không bao giờ dừng"
+    ],
+    correct: 1,
+    explain: "Minna Bài 26: Thể thông thường + んです = Dùng trong hội thoại để giải thích lý do, tình cảnh."
+  },
+  {
+    category: "Biến Đổi Năng Lực",
+    grammar: "〜ようになる (Ví dụ: 日本語が話せるようになる)",
+    example: "VD: 練習して、上手に泳げるようになりました。",
+    options: [
+      "Cố gắng để biết bơi",
+      "DẦN TRỞ NÊN CÓ THỂ... (quá trình biến đổi năng lực theo thời gian)",
+      "Không thích bơi nữa",
+      "Bị ép xuống bơi"
+    ],
+    correct: 1,
+    explain: "Minna Bài 36: V-khả năng + ようになる = Từ không thể trở thành có thể làm được."
+  },
+  {
+    category: "Nỗ Lực Thói Quen",
+    grammar: "〜ようにする (Ví dụ: 早く寝るようにする)",
+    example: "VD: 毎日運動するようにしています。",
+    options: [
+      "Tự nhiên thích vận động",
+      "CỐ GẮNG, NỖ LỰC TẠO DỰNG MỘT THÓI QUEN ĐỀU ĐẶN",
+      "Đã tập thể dục xong rồi",
+      "Cấm không được tập thể dục"
+    ],
+    correct: 1,
+    explain: "Minna Bài 36: V-ru / V-nai + ようにする = Nỗ lực có ý chí nhằm duy trì thói quen tốt."
+  },
+  {
+    category: "Mục Đích Trạng Thái",
+    grammar: "〜ように (Ví dụ: 忘れないようにメモする)",
+    example: "VD: 誰でも読めるように、大きく書きました。",
+    options: [
+      "Vì mọi người đọc được nên tôi viết to",
+      "ĐỂ CHO / SAO CHO... (hướng đến trạng thái mong muốn, không trực tiếp kiểm soát)",
+      "Sau khi mọi người đọc xong thì tôi viết to",
+      "Nếu ai đó đọc thì hãy viết to"
+    ],
+    correct: 1,
+    explain: "Minna Bài 36: V-khả năng / V-nai + ように = Nhằm đạt tới trạng thái mong muốn."
+  },
+  {
+    category: "Mục Đích Hành Động",
+    grammar: "〜ために (Ví dụ: 家を買うために働く)",
+    example: "VD: 大学に入るために、一生懸命勉強しています。",
+    options: [
+      "Sau khi vào đại học thì mới học",
+      "ĐỂ / NHẰM MỤC ĐÍCH... (mục đích có hành vi rõ ràng, hai vế cùng chủ ngữ)",
+      "Vì vào đại học nên không học",
+      "Nếu đỗ đại học thì hãy học"
+    ],
+    correct: 1,
+    explain: "Minna Bài 42: V-ru / N の + ために = Mục đích có hành vi rõ ràng."
+  },
+  {
+    category: "Biến Đổi Tính Từ Đuôi -i",
+    grammar: "〜くなる (Ví dụ: 寒くなる / 暖かくなる)",
+    example: "VD: 11月になると、寒くなります。",
+    options: [
+      "Làm cho trời lạnh đi",
+      "TRỞ NÊN... (biến đổi tự nhiên của tính từ đuôi -i)",
+      "Trời không còn lạnh nữa",
+      "Bắt buộc trời phải lạnh"
+    ],
+    correct: 1,
+    explain: "Minna Bài 19: A-i (bỏ i) + くなる = Biến đổi trạng thái tự nhiên."
+  },
+  {
+    category: "Biến Đổi Tính Từ Đuôi -na / Danh Từ",
+    grammar: "〜になる (Ví dụ: 元気になる / 先生になる)",
+    example: "VD: 彼は医者になりました。",
+    options: [
+      "Anh ấy ghét bác sĩ",
+      "TRỞ THÀNH / TRỞ NÊN... (biến đổi nghề nghiệp, tính chất)",
+      "Anh ấy đi khám bác sĩ",
+      "Anh ấy bắt con làm bác sĩ"
+    ],
+    correct: 1,
+    explain: "Minna Bài 19: N / A-na + になる = Biến đổi trạng thái hoặc chức danh."
+  },
+  {
+    category: "Tác Động Làm Cho (Tính Từ -i)",
+    grammar: "〜くする (Ví dụ: 音を小さくする)",
+    example: "VD: テレビの音を小さくしてください。",
+    options: [
+      "Âm thanh tự nhiên bé lại",
+      "LÀM CHO... (con người chủ động tác động thay đổi tính chất)",
+      "Tivi đang bị tắt tiếng",
+      "Hãy bật âm thanh to lên"
+    ],
+    correct: 1,
+    explain: "Minna Bài 19: A-i (bỏ i) + くする = Con người chủ động chỉnh sửa, biến đổi sự vật."
+  },
+  {
+    category: "Tác Động Làm Cho (Tính Từ -na)",
+    grammar: "〜にする (Ví dụ: 部屋をきれいにする)",
+    example: "VD: 部屋をきれいに掃除しました。",
+    options: [
+      "Căn phòng tự sạch sẽ",
+      "LÀM CHO CĂN PHÒNG TRỞ NÊN SẠCH SẼ (chủ động làm đẹp/sạch)",
+      "Căn phòng bị bừa bộn",
+      "Cấm không được dọn phòng"
+    ],
+    correct: 1,
+    explain: "Minna Bài 19: A-na / N + にする = Chủ động làm cho đối tượng biến đổi."
+  },
+  {
+    category: "Lựa Chọn Một Thứ",
+    grammar: "〜にする (Ví dụ: コーヒーにする)",
+    example: "VD: レストランで：私はカレーにします。",
+    options: [
+      "Tôi tự nấu món cà ri",
+      "TÔI CHỌN / QUYẾT ĐỊNH CHỌN MÓN NÀY (đưa ra sự lựa chọn)",
+      "Tôi không thích ăn cà ri",
+      "Cà ri bị hỏng rồi"
+    ],
+    correct: 1,
+    explain: "Minna Bài 19: N + にする = Đưa ra quyết định chọn lựa một món đồ/phương án."
+  },
+
+  // 81-90: DIỆN MẠO, TIN ĐỒN & PHÁN ĐOÁN
+  {
+    category: "Thị Giác Trực Quan",
+    grammar: "〜そうだ (V-bỏ masu / Tính từ bỏ đuôi + そうだ)",
+    example: "VD: この荷物は重そうです / 雨が降りそうです。",
+    options: [
+      "Nghe đồn cái túi này nặng lắm",
+      "TRÔNG CÓ VẺ... / SẮP SỬA... (phán đoán qua trực giác mắt nhìn)",
+      "Cái túi này rất nhẹ",
+      "Mưa đã tạnh từ lâu"
+    ],
+    correct: 1,
+    explain: "Minna Bài 43: Bỏ đuôi + そうだ = Đánh giá trực quan (Trông có vẻ nặng, sắp mưa)."
+  },
+  {
+    category: "Truyền Đạt Tin Tức",
+    grammar: "〜そうだ (Thể thông thường + そうだ)",
+    example: "VD: 天気予報によると、明日は晴れるそうです。",
+    options: [
+      "Trông ngày mai có vẻ nắng",
+      "NGHE NÓI LÀ... (truyền đạt lại tin tức nghe được từ nguồn khác)",
+      "Ngày mai chắc chắn mưa to",
+      "Tôi muốn ngày mai trời nắng"
+    ],
+    correct: 1,
+    explain: "Minna Bài 47: Thể thông thường + そうだ = Thuật lại nguồn tin tức hoặc lời kể."
+  },
+  {
+    category: "Phán Đoán Dấu Hiệu",
+    grammar: "〜ようだ / 〜ようです (Ví dụ: 誰もいないようです)",
+    example: "VD: 彼は疲れているようです。顔色がよくありません。",
+    options: [
+      "Anh ấy nói với tôi là anh ấy mệt",
+      "HÌNH NHƯ / DƯỜNG NHƯ LÀ... (suy đoán dựa trên bằng chứng quan sát thực tế)",
+      "Anh ấy chắc chắn không mệt",
+      "Anh ấy bắt người khác phải mệt"
+    ],
+    correct: 1,
+    explain: "Minna Bài 47: 〜ようだ = Phán đoán từ căn cứ quan sát (sắc mặt xấu -> hình như mệt)."
+  },
+  {
+    category: "So Sánh Như Là",
+    grammar: "〜ようだ / 〜ように (Ví dụ: 夢のようだ)",
+    example: "VD: 彼の日本語はまるで日本人のようです。",
+    options: [
+      "Anh ấy là người Nhật Bản",
+      "NHƯ LÀ... / CỨ NHƯ THỂ LÀ... (so sánh ví von)",
+      "Anh ấy không biết nói tiếng Nhật",
+      "Người Nhật học tiếng Nhật"
+    ],
+    correct: 1,
+    explain: "N4: N の + ようだ = Ví von, so sánh mức độ tương đồng (cứ như là)."
+  },
+  {
+    category: "Nghe Phong Phanh",
+    grammar: "〜らしい (Ví dụ: 噂によると、彼は合格したらしい)",
+    example: "VD: 噂では、あの二人は結婚するらしいです。",
+    options: [
+      "Hai người chắc chắn chưa cưới",
+      "HÌNH NHƯ / NGHE ĐỒN LÀ... (suy đoán dựa trên tin đồn, thông tin phong thanh)",
+      "Tôi vừa dự đám cưới của họ",
+      "Tôi cấm hai người họ cưới"
+    ],
+    correct: 1,
+    explain: "N4: 〜らしい = Suy đoán dựa trên thông tin gián tiếp bên ngoài."
+  },
+  {
+    category: "Đúng Chất / Đậm Chất",
+    grammar: "〜らしい (Ví dụ: 男らしい / 春らしい)",
+    example: "VD: 今日は暖かくて、春らしい日ですね。",
+    options: [
+      "Hôm nay chưa phải mùa xuân",
+      "ĐÚNG CHẤT... / ĐẬM CHẤT... (toát lên bản chất đặc trưng vốn có)",
+      "Mùa xuân rất lạnh lẽo",
+      "Tôi ghét mùa xuân"
+    ],
+    correct: 1,
+    explain: "N4: N + らしい = Mang đầy đủ tính chất tiêu biểu của danh từ đó (đậm chất xuân, ra dáng đàn ông)."
+  },
+  {
+    category: "Xác Suất 50%",
+    grammar: "〜かもしれない (Ví dụ: 遅れるかもしれない)",
+    example: "VD: 約束の時間に間に合わないかもしれません。",
+    options: [
+      "Chắc chắn tôi sẽ đến đúng giờ",
+      "CÓ KHẢ NĂNG LÀ... / CÓ THỂ LÀ... (xác suất khoảng 50%, không chắc chắn)",
+      "Tuyệt đối không bao giờ trễ",
+      "Đã đến nơi từ sớm"
+    ],
+    correct: 1,
+    explain: "Minna Bài 32: 〜かもしれない = Phán đoán dè dặt, có thể xảy ra mà cũng có thể không."
+  },
+  {
+    category: "Chắc Chắn Lắm",
+    grammar: "〜にちがいない (Ví dụ: 犯人は彼にちがいない)",
+    example: "VD: 明かりがついているから、彼は部屋にいるにちがいない。",
+    options: [
+      "Anh ấy chắc chắn không có trong phòng",
+      "CHẮC CHẮN LÀ... / KHÔNG THỂ SAI ĐƯỢC (phán đoán có căn cứ xác thực 99%)",
+      "Có lẽ anh ấy đi vắng",
+      "Đèn phòng bị hỏng"
+    ],
+    correct: 1,
+    explain: "N4: 〜に違いない = Khẳng định chắc chắn dựa trên chứng cứ hiển nhiên."
+  },
+  {
+    category: "Phán Đoán Lịch Sự",
+    grammar: "〜でしょう / 〜だろう (Ví dụ: 明日は晴れるでしょう)",
+    example: "VD: 北海道は今とても寒いでしょう。",
+    options: [
+      "Hokkaido chắc chắn đang rất nóng",
+      "CÓ LẼ LÀ... / CHẮC LÀ... (phán đoán nhẹ nhàng, lịch sự)",
+      "Tôi muốn Hokkaido phải lạnh",
+      "Hokkaido không bao giờ lạnh"
+    ],
+    correct: 1,
+    explain: "Minna Bài 32: Thể thông thường + でしょう = Dự đoán lịch sự không áp đặt."
+  },
+  {
+    category: "Quyết Định Cá Nhân",
+    grammar: "〜ことにする (Ví dụ: 毎日勉強することにした)",
+    example: "VD: 来年からタバコをやめることにしました。",
+    options: [
+      "Bị bác sĩ ép bỏ thuốc",
+      "TÔI ĐÃ QUYẾT ĐỊNH SẼ LÀM GÌ (ý chí chủ quan của bản thân)",
+      "Người khác quyết định thay tôi",
+      "Tự nhiên không thích thuốc lá"
+    ],
+    correct: 1,
+    explain: "N4: V-ru / V-nai + ことにする = Quyết định do chính ý chí bản thân đưa ra."
+  },
+
+  // 91-100: HÀNH ĐỘNG VỚI THỂ て (V-TE)
+  {
+    category: "Tiếc Nuối / Hoàn Tất",
+    grammar: "〜てしまう (Ví dụ: 忘れてしまった / パスポートを落としてしまった)",
+    example: "VD: 大切な時計を壊してしまいました。",
+    options: [
+      "Chuẩn bị làm vỡ đồng hồ",
+      "LỠ MẤT RỒI (hối tiếc ngoài ý muốn) / ĐÃ HOÀN TẤT DỨT ĐIỂM",
+      "Cố tình làm vỡ đồng hồ",
+      "Được người khác tặng đồng hồ mới"
+    ],
+    correct: 1,
+    explain: "Minna Bài 29: V-てしまう = Tiếc nuối khi xảy ra việc ngoài ý muốn, hoặc hoàn thành 100%."
+  },
+  {
+    category: "Chuẩn Bị Sẵn",
+    grammar: "〜ておく (Ví dụ: 買っておく / 調べておく)",
+    example: "VD: 会議の前に資料をコピーしておきます。",
+    options: [
+      "LÀM SẴN / CHUẨN BỊ TRƯỚC VIỆC GÌ PHỤC VỤ CHO TƯƠNG LAI",
+      "Lỡ photocopy tài liệu mất rồi",
+      "Không được phép photocopy tài liệu",
+      "Sau cuộc họp mới photo tài liệu"
+    ],
+    correct: 0,
+    explain: "Minna Bài 30: V-ておく = Chuẩn bị trước cho tương lai hoặc giữ nguyên trạng thái."
+  },
+  {
+    category: "Trạng Thái Có Chủ Đích",
+    grammar: "〜てある (Tha động từ + てある, VD: 貼ってある)",
+    example: "VD: 黒板に文字が書いてあります。",
+    options: [
+      "Bảng tự nhiên xuất hiện chữ",
+      "ĐANG ĐƯỢC LÀM SẴN Ở ĐÓ (kết quả do con người cố tình làm để sẵn)",
+      "Chuẩn bị viết lên bảng",
+      "Vừa mới xóa chữ trên bảng"
+    ],
+    correct: 1,
+    explain: "Minna Bài 30: Tha động từ + てある = Trạng thái kết quả của một hành động có chủ ý."
+  },
+  {
+    category: "Trạng Thái Khách Quan",
+    grammar: "〜ている (Tự động từ + ている, VD: 壊れている / 開いている)",
+    example: "VD: ドアが開いていますよ。",
+    options: [
+      "Ai đó đang cố tình mở cửa",
+      "ĐANG Ở TRẠNG THÁI... (kết quả khách quan của sự vật, cửa đang mở)",
+      "Hãy mở cửa ra đi",
+      "Cửa đã bị khóa chặt"
+    ],
+    correct: 1,
+    explain: "Minna Bài 29: Tự động từ + ている = Trạng thái hiện tại của sự vật."
+  },
+  {
+    category: "Hành Động Đang Diễn Ra",
+    grammar: "〜ている (Động từ hành vi + ている, VD: 食べている)",
+    example: "VD: 今、本を読んでいます。",
+    options: [
+      "ĐÃ ĐỌC XONG cuốn sách rồi",
+      "ĐANG THỰC HIỆN HÀNH ĐỘNG (tiếp diễn tại thời điểm nói)",
+      "Chuẩn bị đọc sách",
+      "Không muốn đọc sách"
+    ],
+    correct: 1,
+    explain: "Minna Bài 14: V-ている = Hành động đang diễn ra tại thời điểm hiện tại."
+  },
+  {
+    category: "Nghề Nghiệp / Thói Quen",
+    grammar: "〜ている (Ví dụ: 会社で働いている / 結婚している)",
+    example: "VD: 兄は銀行で働いています。",
+    options: [
+      "Anh trai chuẩn bị xin việc",
+      "TRẠNG THÁI NGHỀ NGHIỆP / TÌNH TRẠNG DUY TRÌ LÂU DÀI",
+      "Anh trai đã nghỉ việc ở ngân hàng",
+      "Anh trai cấm làm ở ngân hàng"
+    ],
+    correct: 1,
+    explain: "Minna Bài 15: V-ている = Diễn tả trạng thái hôn nhân, công việc, nơi ở kéo dài."
+  },
+  {
+    category: "Thử Nghiệm",
+    grammar: "〜てみる (Ví dụ: 着てみる / 食べてみる)",
+    example: "VD: この靴を履いてみてもいいですか。",
+    options: [
+      "Nhìn người khác đi giày",
+      "LÀM THỬ VIỆC GÌ ĐÓ XEM KẾT QUẢ RA SAO",
+      "Cấm không được thử giày",
+      "Đã đi đôi giày này nhiều lần"
+    ],
+    correct: 1,
+    explain: "Minna Bài 40: V-てみる = Làm thử một hành động để trải nghiệm."
+  },
+  {
+    category: "Trật Tự Thời Gian",
+    grammar: "〜てから (Ví dụ: 手を洗ってから食べる)",
+    example: "VD: 大学を卒業してから、何をしますか。",
+    options: [
+      "Vì tốt nghiệp nên không làm gì",
+      "SAU KHI LÀM XONG VIỆC A THÌ MỚI LÀM VIỆC B",
+      "Trước khi tốt nghiệp thì hãy làm",
+      "Trong lúc đang học đại học"
+    ],
+    correct: 1,
+    explain: "Minna Bài 16: V-てから = Thứ tự trước sau: xong A hoàn toàn rồi mới sang B."
+  },
+  {
+    category: "Cấm Chỉ Tuyệt Đối",
+    grammar: "〜てはいけない (Ví dụ: 写真を撮ってはいけない)",
+    example: "VD: 美術館で写真を撮ってはいけません。",
+    options: [
+      "Không cần chụp ảnh cũng được",
+      "CẤM / TUYỆT ĐỐI KHÔNG ĐƯỢC PHÉP LÀM",
+      "Nên chụp ảnh ở bảo tàng",
+      "Được phép chụp ảnh thoải mái"
+    ],
+    correct: 1,
+    explain: "Minna Bài 15: V-てはいけない = Quy định cấm đoán nghiêm ngặt."
+  },
+  {
+    category: "Đi Rồi Về",
+    grammar: "〜てくる (Ví dụ: パンを買ってくる)",
+    example: "VD: ちょっと切符を買ってきます。",
+    options: [
+      "ĐÃ MUA VÉ XONG rồi không đi đâu nữa",
+      "ĐI LÀM GÌ ĐÓ RỒI QUAY TRỞ LẠI ĐÂY",
+      "Vé được người khác gửi đến",
+      "Cấm không được mua vé"
+    ],
+    correct: 1,
+    explain: "Minna Bài 43: V-てくる = Rời vị trí đi làm việc gì rồi quay về chỗ cũ."
+  },
+
+  // 101-110: THỜI ĐIỂM, THỂ TỪ ĐIỂN (RU) & THỂ PHỦ ĐỊNH (NAI)
+  {
+    category: "Khoảnh Khắc Sắp Làm",
+    grammar: "〜ところだ (V-ru ところ, VD: 食べるところだ)",
+    example: "VD: 今から出かけるところです。",
+    options: [
+      "Vừa mới về nhà xong",
+      "CHUẨN BỊ / ĐÚNG LÚC SẮP SỬA BẮT ĐẦU LÀM GÌ",
+      "Đang đi giữa đường",
+      "Không muốn đi ra ngoài"
+    ],
+    correct: 1,
+    explain: "Minna Bài 46: V-ru ところ = Đúng khoảnh khắc sắp sửa bắt đầu hành động."
+  },
+  {
+    category: "Khoảnh Khắc Đang Làm",
+    grammar: "〜ところだ (V-te いるところ, VD: 調べているところだ)",
+    example: "VD: 今、原因を調べているところです。",
+    options: [
+      "Đã tìm ra nguyên nhân rồi",
+      "ĐANG TRONG ĐÚNG KHOẢNH KHẮC LÀM DỞ DANG VIỆC ĐÓ",
+      "Chưa bắt đầu tìm nguyên nhân",
+      "Không cần tìm nguyên nhân nữa"
+    ],
+    correct: 1,
+    explain: "Minna Bài 46: V-te いるところ = Đang đúng vào lúc tiến hành giữa chừng."
+  },
+  {
+    category: "Khoảnh Khắc Vừa Xong",
+    grammar: "〜ところだ (V-ta ところ, VD: 終わったところだ)",
+    example: "VD: たった今、会議が終わったところです。",
+    options: [
+      "Cuộc họp sắp sửa bắt đầu",
+      "VỪA MỚI TỨC THÌ XONG TRONG TÍCH TẮC",
+      "Đang họp rất căng thẳng",
+      "Hủy bỏ cuộc họp"
+    ],
+    correct: 1,
+    explain: "Minna Bài 46: V-ta ところ = Vừa hoàn tất ngay trong tích tắc (tính bằng giây/phút)."
+  },
+  {
+    category: "Vừa Mới Diễn Ra (Cảm Giác)",
+    grammar: "〜たばかり (Ví dụ: 買ったばかり)",
+    example: "VD: この車は先週買ったばかりです。",
+    options: [
+      "Chiếc xe này toàn đồ cũ",
+      "VỪA MỚI LÀM VIỆC GÌ XONG (theo cảm nhận chủ quan là còn rất mới)",
+      "Chuẩn bị mua xe này",
+      "Chiếc xe này đã hỏng rồi"
+    ],
+    correct: 1,
+    explain: "Minna Bài 46: V-た + ばかり = Vừa mới thực hiện xong (tính theo cảm giác thời gian của người nói)."
+  },
+  {
+    category: "Khả Năng Động Từ",
+    grammar: "〜ことができる (Ví dụ: 泳ぐことができる)",
+    example: "VD: 私はピアノを弾くことができます。",
+    options: [
+      "Tôi thích nghe đàn piano",
+      "TÔI CÓ KHẢ NĂNG / CÓ THỂ LÀM ĐƯỢC VIỆC GÌ",
+      "Tôi vừa bán đàn piano",
+      "Tôi bắt người khác chơi piano"
+    ],
+    correct: 1,
+    explain: "Minna Bài 18: V-ru + ことができる = Biểu thị năng lực thực hiện hành động."
+  },
+  {
+    category: "Trước Khi Làm",
+    grammar: "〜前（まえ）に (Ví dụ: 寝る前に本を読む)",
+    example: "VD: 食事の前に、手を洗います。",
+    options: [
+      "TRƯỚC KHI THỰC HIỆN HÀNH ĐỘNG GÌ ĐÓ",
+      "Sau khi ăn xong thì rửa tay",
+      "Trong khi đang ăn cơm",
+      "Vì ăn cơm nên phải rửa tay"
+    ],
+    correct: 0,
+    explain: "Minna Bài 18: V-ru / N の + 前に = Làm việc gì trước mốc hành động kia."
+  },
+  {
+    category: "Đôi Khi Xảy Ra",
+    grammar: "〜ことがある (V-ru ことがある, VD: 忘れることがある)",
+    example: "VD: 彼は時々約束を忘れることがあります。",
+    options: [
+      "Anh ấy đã từng quên trong quá khứ",
+      "THỈNH THOẢNG / ĐÔI KHI CÓ XẢY RA VIỆC GÌ (tần suất)",
+      "Anh ấy không bao giờ quên",
+      "Anh ấy chuẩn bị quên"
+    ],
+    correct: 1,
+    explain: "N4: V-ru + ことがある = Đôi khi có xảy ra. Khác với V-た + ことがある (đã từng trải nghiệm)."
+  },
+  {
+    category: "Hành Động Đi Kèm",
+    grammar: "〜ないで (Ví dụ: 傘を持たないで出かける)",
+    example: "VD: 昨日の夜、歯を磨かないで寝てしまいました。",
+    options: [
+      "Vì đánh răng nên đi ngủ muộn",
+      "LÀM VIỆC NÀY MÀ KHÔNG LÀM VIỆC KIA KÈM THEO",
+      "Cấm không được đi ngủ",
+      "Sau khi đánh răng thì mới ngủ"
+    ],
+    correct: 1,
+    explain: "Minna Bài 34: V-ないで + V2 = Thực hiện hành vi 2 mà không kèm theo hành vi 1."
+  },
+  {
+    category: "Không Bắt Buộc",
+    grammar: "〜なくてもいい (Ví dụ: 来なくてもいい)",
+    example: "VD: 明日は休みだから、会社へ来なくてもいいです。",
+    options: [
+      "Cấm không được đến công ty",
+      "KHÔNG CẦN PHẢI LÀM GÌ CŨNG ĐƯỢC (không bắt buộc)",
+      "Bắt buộc phải đến công ty",
+      "Nên đến công ty thì tốt hơn"
+    ],
+    correct: 1,
+    explain: "Minna Bài 17: V-ない (bỏ i) + くてもいい = Không bắt buộc, làm hay không làm đều được."
+  },
+  {
+    category: "Nghĩa Vụ Bắt Buộc",
+    grammar: "〜なければならない (Ví dụ: 払わなければならない)",
+    example: "VD: 約束は守らなければなりません。",
+    options: [
+      "Không được phép giữ lời hứa",
+      "BẮT BUỘC PHẢI LÀM VIỆC GÌ (nghĩa vụ, luật lệ)",
+      "Giữ lời hứa cũng được mà không giữ cũng được",
+      "Nên quên lời hứa đi"
+    ],
+    correct: 1,
+    explain: "Minna Bài 17: V-ない (bỏ i) + ければならない = Bắt buộc phải thực hiện."
+  },
+
+  // 111-120: THỜI GIAN, TIẾP DIỄN & ĐỒNG THỜI
+  {
+    category: "Đồng Thời",
+    grammar: "〜ながら (Ví dụ: 歩きながら電話する)",
+    example: "VD: お茶を飲みながら、楽しく話しました。",
+    options: [
+      "Uống trà xong xuôi rồi mới nói chuyện",
+      "VỪA LÀM VIỆC NÀY VỪA LÀM VIỆC KIA song song cùng lúc",
+      "Vì uống trà nên mới nói chuyện",
+      "Không uống trà cũng không nói chuyện"
+    ],
+    correct: 1,
+    explain: "Minna Bài 28: V-masu (bỏ masu) + ながら = Làm 2 việc cùng lúc, vế sau là trọng tâm."
+  },
+  {
+    category: "Hành Động Khởi Đầu",
+    grammar: "〜始める (Ví dụ: 降り始める / 読み始める)",
+    example: "VD: 赤ちゃんが急に泣き始めました。",
+    options: [
+      "Đứa bé vừa mới nín khóc",
+      "BẮT ĐẦU LÀM GÌ / BẮT ĐẦU DIỄN RA HIỆN TƯỢNG GÌ",
+      "Cố gắng để đứa bé không khóc",
+      "Đứa bé sắp sửa nín khóc"
+    ],
+    correct: 1,
+    explain: "N4: V-masu (bỏ masu) + 始める = Khởi đầu một chuỗi hành động/hiện tượng."
+  },
+  {
+    category: "Hành Động Hoàn Tất",
+    grammar: "〜終わる (Ví dụ: 読み終わる / 食べ終わる)",
+    example: "VD: この本を読み終わったら、貸してください。",
+    options: [
+      "Bắt đầu đọc cuốn sách này",
+      "LÀM XONG XUÔI / HOÀN TẤT TRỌN VẸN HÀNH ĐỘNG GÌ",
+      "Không thích đọc sách nữa",
+      "Đang đọc dở nửa cuốn sách"
+    ],
+    correct: 1,
+    explain: "N4: V-masu (bỏ masu) + 終わる = Hoàn thành dứt điểm hành động đó."
+  },
+  {
+    category: "Hành Động Tiếp Diễn",
+    grammar: "〜続ける (Ví dụ: 走り続ける / 降り続ける)",
+    example: "VD: 彼は3時間も走り続けました。",
+    options: [
+      "Anh ấy ngừng chạy sau 3 tiếng",
+      "TIẾP TỤC / DUY TRÌ LIÊN TỤC KHÔNG DỪNG",
+      "Anh ấy vừa mới bắt đầu chạy",
+      "Cấm không được chạy"
+    ],
+    correct: 1,
+    explain: "N4: V-masu (bỏ masu) + 続ける = Hành động/hiện tượng tiếp diễn không gián đoạn."
+  },
+  {
+    category: "Dễ Làm Gì",
+    grammar: "〜やすい (Ví dụ: 分かりやすい / 読みやすい)",
+    example: "VD: この辞書は説明が丁寧で、分かりやすいです。",
+    options: [
+      "Từ điển này rất khó hiểu",
+      "DỄ DÀNG THỰC HIỆN HÀNH ĐỘNG (Dễ hiểu, dễ đọc)",
+      "Từ điển này bị sai sót",
+      "Không thích dùng cuốn từ điển này"
+    ],
+    correct: 1,
+    explain: "Minna Bài 44: V-masu (bỏ masu) + やすい = Có tính chất thuận lợi, dễ thao tác."
+  },
+  {
+    category: "Khó Làm Gì",
+    grammar: "〜にくい (Ví dụ: 読みにくい / 飲みにくい)",
+    example: "VD: 雨の日は道が滑りやすくて、歩きにくいです。",
+    options: [
+      "Đường rất dễ đi",
+      "KHÓ KHĂN KHI THỰC HIỆN HÀNH ĐỘNG (Khó đi bộ)",
+      "Đường này cấm đi bộ",
+      "Tôi rất thích đi bộ trời mưa"
+    ],
+    correct: 1,
+    explain: "Minna Bài 44: V-masu (bỏ masu) + にくい = Có trở ngại khiến hành động khó diễn ra."
+  },
+  {
+    category: "Quá Giới Hạn",
+    grammar: "〜すぎる (Ví dụ: 食べすぎる / 高すぎる)",
+    example: "VD: 昨日のテストは難しすぎました。",
+    options: [
+      "Bài thi hôm qua rất dễ",
+      "LÀM CÁI GÌ ĐÓ QUÁ MỨC / QUÁ GIỚI HẠN BÌNH THƯỜNG",
+      "Bài thi hôm qua bình thường",
+      "Tôi không làm bài thi hôm qua"
+    ],
+    correct: 1,
+    explain: "Minna Bài 44: V-masu / Tính từ bỏ đuôi + すぎる = Vượt qua ngưỡng cho phép/hợp lý."
+  },
+  {
+    category: "Sau Khi Làm Gì",
+    grammar: "〜たあとで (Ví dụ: 食べたあとで薬を飲む)",
+    example: "VD: 仕事が終わったあとで、飲みに行きます。",
+    options: [
+      "Trước khi làm việc thì đi uống",
+      "SAU KHI HOÀN THÀNH XONG HÀNH ĐỘNG A THÌ MỚI LÀM B",
+      "Trong khi đang làm việc",
+      "Vì uống rượu nên không làm việc"
+    ],
+    correct: 1,
+    explain: "Minna Bài 34: V-た / N の + あとで = Mốc thời gian sau khi kết thúc hành động trước."
+  },
+  {
+    category: "Giữ Nguyên Trạng Thái",
+    grammar: "〜たまま (Ví dụ: 靴をはいたまま入る)",
+    example: "VD: テレビをつけたまま寝てしまいました。",
+    options: [
+      "Tắt tivi rồi mới đi ngủ",
+      "GIỮ NGUYÊN TRẠNG THÁI ĐÓ MÀ THỰC HIỆN VIỆC KHÁC (để nguyên tivi bật)",
+      "Chuẩn bị bật tivi",
+      "Tivi tự nó bật lên"
+    ],
+    correct: 1,
+    explain: "N4: V-た / N の + まま = Giữ nguyên trạng thái cũ vốn không nên để thế mà làm việc khác."
+  },
+  {
+    category: "Kinh Nghiệm Quá Khứ",
+    grammar: "〜たことがある (Ví dụ: 日本へ行ったことがある)",
+    example: "VD: 馬に乗ったことがありますか。",
+    options: [
+      "Đang trên lưng ngựa",
+      "ĐÃ TỪNG TRẢI QUA VIỆC GÌ (kinh nghiệm trong quá khứ)",
+      "Chuẩn bị cưỡi ngựa ngày mai",
+      "Không bao giờ muốn cưỡi ngựa"
+    ],
+    correct: 1,
+    explain: "Minna Bài 19: V-た + ことがある = Đã từng trải nghiệm việc gì đó ít nhất 1 lần trong đời."
+  },
+
+  // 121-130: LỜI KHUYÊN, NGUYÊN NHÂN & SO SÁNH
+  {
+    category: "Lời Khuyên Nên Làm",
+    grammar: "〜たほうがいい (Ví dụ: 早く寝たほうがいい)",
+    example: "VD: 咳がひどいですね。病院へ行ったほうがいいですよ。",
+    options: [
+      "Đã từng đi bệnh viện tuần trước",
+      "NÊN LÀM VIỆC GÌ ĐÓ (lời khuyên đưa ra phương án tốt nhất)",
+      "Cấm không được đi bệnh viện",
+      "Bắt buộc phải đi viện ngay"
+    ],
+    correct: 1,
+    explain: "Minna Bài 32: V-た + ほうがいい = Khuyên đối phương nên chọn phương án đó."
+  },
+  {
+    category: "Lời Khuyên Không Nên Làm",
+    grammar: "〜ないほうがいい (Ví dụ: 行かないほうがいい)",
+    example: "VD: お酒を飲んだら、運転しないほうがいいですよ。",
+    options: [
+      "Hãy lái xe thật nhanh đi",
+      "KHÔNG NÊN LÀM VIỆC GÌ ĐÓ (lời khuyên can ngăn)",
+      "Bắt buộc phải lái xe",
+      "Đã lỡ lái xe mất rồi"
+    ],
+    correct: 1,
+    explain: "Minna Bài 32: V-ない + ほうがいい = Khuyên đối phương không nên làm để tránh hậu quả."
+  },
+  {
+    category: "Liệt Kê Tiêu Biểu",
+    grammar: "〜たり〜たりする (Ví dụ: 掃除したり洗濯したりする)",
+    example: "VD: 休みの日はテレビを見たり、買い物をしたりします。",
+    options: [
+      "Vừa xem tivi vừa đi mua đồ cùng lúc",
+      "LÚC THÌ LÀM VIỆC NÀY, LÚC THÌ LÀM VIỆC KIA (liệt kê hành vi tiêu biểu)",
+      "Xem tivi xong bắt buộc phải đi mua đồ",
+      "Cấm xem tivi và cấm mua đồ"
+    ],
+    correct: 1,
+    explain: "Minna Bài 19: V-たり V-たりする = Liệt kê các hành động không theo thứ tự thời gian."
+  },
+  {
+    category: "So Sánh Kém Hơn",
+    grammar: "〜ほど〜ない (Ví dụ: 東京ほど寒くない)",
+    example: "VD: 今年の夏は去年ほど暑くありません。",
+    options: [
+      "Mùa hè năm nay nóng hơn năm ngoái",
+      "KHÔNG BẰNG... (Mùa hè năm nay không nóng bằng năm ngoái)",
+      "Năm ngoái mát mẻ hơn năm nay",
+      "Cả hai năm nóng như nhau"
+    ],
+    correct: 1,
+    explain: "Minna Bài 12: A は B ほど + Phủ định = A không đạt mức độ bằng đối tượng B."
+  },
+  {
+    category: "So Sánh Nhất",
+    grammar: "〜の中で〜がいちばん (Ví dụ: 季節の中で春がいちばん好き)",
+    example: "VD: 果物の中でリンゴがいちばん好きです。",
+    options: [
+      "Ghét ăn táo nhất",
+      "TRONG SỐ CÁC... THÌ CÁI NÀY LÀ NHẤT (vị trí số 1 trong tập hợp)",
+      "Táo và cam ngon bằng nhau",
+      "Không thích ăn loại quả nào"
+    ],
+    correct: 1,
+    explain: "Minna Bài 12: Phạm vi + の中で + Đối tượng + が一番 = Đối tượng đứng đầu trong tập hợp."
+  },
+  {
+    category: "So Sánh Hơn",
+    grammar: "〜より〜のほうが (Ví dụ: 電車より飛行機のほうが速い)",
+    example: "VD: バスより電車のほうが便利です。",
+    options: [
+      "Xe buýt tiện lợi hơn tàu điện",
+      "SO VỚI A THÌ B HƠN (Tàu điện thì tiện hơn xe buýt)",
+      "Cả hai phương tiện đều bất tiện",
+      "Xe buýt và tàu điện tiện như nhau"
+    ],
+    correct: 1,
+    explain: "Minna Bài 12: A より B のほうが + Tính từ = Khẳng định B có thuộc tính trội hơn A."
+  },
+  {
+    category: "Giống Nhau",
+    grammar: "〜と同じ (Ví dụ: 私と同じ考え)",
+    example: "VD: 私の車は田中さんと同じです。",
+    options: [
+      "Xe của tôi khác xe Tanaka",
+      "GIỐNG VỚI / GIỐNG NHƯ... (tương đồng về tính chất, chủng loại)",
+      "Xe của tôi đắt hơn xe Tanaka",
+      "Tôi không có xe hơi"
+    ],
+    correct: 1,
+    explain: "N4: N と同じ = Giống hệt hoặc cùng loại với N."
+  },
+  {
+    category: "Khác Nhau",
+    grammar: "〜と違う (Ví dụ: 日本と違う文化)",
+    example: "VD: ベトナムの習慣は日本の習慣と違います。",
+    options: [
+      "Tập quán hai nước giống nhau hoàn toàn",
+      "KHÁC BIỆT SO VỚI... (khác nhau về tập quán, suy nghĩ)",
+      "Việt Nam không có tập quán nào",
+      "Cả hai nước đều dùng chung tập quán"
+    ],
+    correct: 1,
+    explain: "N4: N と違う = Khác biệt so với đối tượng so sánh N."
+  },
+  {
+    category: "Về Một Vấn Đề",
+    grammar: "〜について (Ví dụ: 日本の経済について調べる)",
+    example: "VD: 日本の文化について研究しています。",
+    options: [
+      "Không quan tâm văn hóa Nhật",
+      "VỀ VẤN ĐỀ... / LIÊN QUAN ĐẾN ĐỀ TÀI... (nghiên cứu, nói, viết)",
+      "Văn hóa Nhật rất khó hiểu",
+      "Đã bỏ nghiên cứu văn hóa Nhật"
+    ],
+    correct: 1,
+    explain: "Minna Bài 34: N について = Chỉ đề tài, đối tượng của hành động tìm hiểu, phát biểu."
+  },
+  {
+    category: "Tùy Thuộc / Bởi Ai",
+    grammar: "〜によって (Ví dụ: 人によって違う / 電話はベルによって発明された)",
+    example: "VD: 習慣は国によって違います。",
+    options: [
+      "Mọi quốc gia tập quán đều như nhau",
+      "TÙY THEO... / DO AI ĐÓ PHÁT MINH SÁNG TÁC (chỉ căn cứ hoặc tác giả)",
+      "Không có quốc gia nào có tập quán",
+      "Tập quán do tôi quy định"
+    ],
+    correct: 1,
+    explain: "Minna Bài 37: N によって = Tùy thuộc vào N (khác biệt) hoặc Bị động chỉ tác giả sáng chế."
+  },
+
+  // 131-140: CỤM CỐ ĐỊNH THÀNH NGỮ N4
+  {
+    category: "Cụm Cố Định",
+    grammar: "体にいい (からだにいい)",
+    example: "VD: 野菜をたくさん食べるのは、体にいいです。",
+    options: [
+      "Có hại cho sức khỏe",
+      "TỐT CHO SỨC KHỎE / CƠ THỂ",
+      "Làm cơ thể mệt mỏi thêm",
+      "Không liên quan đến sức khỏe"
+    ],
+    correct: 1,
+    explain: "Minna Bài 12: 体にいい = Tốt cho sức khỏe. Trái nghĩa: 体に悪い."
+  },
+  {
+    category: "Cụm Cố Định",
+    grammar: "都合がいい (つごうがいい)",
+    example: "VD: 来週の月曜日は都合がいいですか。",
+    options: [
+      "Bạn có cảm thấy vui không?",
+      "THUẬN TIỆN VỀ MẶT THỜI GIAN / LỊCH TRÌNH",
+      "Công việc có trục trặc gì không?",
+      "Sức khỏe thế nào?"
+    ],
+    correct: 1,
+    explain: "Minna Bài 26: 都合がいい = Rảnh, tiện lịch. Trái nghĩa: 都合が悪い."
+  },
+  {
+    category: "Cụm Cố Định",
+    grammar: "役に立つ (やくにたつ)",
+    example: "VD: この辞書は仕事にとても役に立ちます。",
+    options: [
+      "Đứng yên một chỗ",
+      "CÓ ÍCH / HỮU ÍCH / CÓ TÁC DỤNG TỐT",
+      "Làm lãng phí thời gian",
+      "Gây cản trở công việc"
+    ],
+    correct: 1,
+    explain: "Minna Bài 30: 役に立つ = Hữu ích, phát huy tác dụng thực tế."
+  },
+  {
+    category: "Cụm Cố Định",
+    grammar: "道に迷う (みちにまよう)",
+    example: "VD: 初めての町で道に迷ってしまいました。",
+    options: [
+      "Tìm thấy đường tắt",
+      "BỊ LẠC ĐƯỜNG",
+      "Hỏi thăm đường đi",
+      "Đang sửa đường"
+    ],
+    correct: 1,
+    explain: "Minna Bài 40: 道に迷う = Mất phương hướng, bị lạc đường."
+  },
+  {
+    category: "Cụm Cố Định",
+    grammar: "気をつける (きをつける)",
+    example: "VD: 車が多いですから、気をつけてください。",
+    options: [
+      "Bị mất tập trung",
+      "CẨN THẬN / CHÚ Ý GIỮ AN TOÀN",
+      "Cảm thấy vô cùng ưng ý",
+      "Bận tâm lo nghĩ quá mức"
+    ],
+    correct: 1,
+    explain: "Minna Bài 14: 気をつける = Chú ý cẩn thận."
+  },
+  {
+    category: "Cụm Cố Định",
+    grammar: "気に入る (きにいる)",
+    example: "VD: この服のデザインがとても気に入りました。",
+    options: [
+      "Không thích bộ quần áo này",
+      "ƯNG Ý / VỪA MẮT / THÍCH",
+      "Cẩn thận với bộ quần áo",
+      "Đang sửa quần áo"
+    ],
+    correct: 1,
+    explain: "Minna Bài 30: 気に入る = Vừa lòng, hợp ý mình."
+  },
+  {
+    category: "Cụm Cố Định",
+    grammar: "気がつく (きがつく)",
+    example: "VD: 間違いに気がつきました。",
+    options: [
+      "Cố tình phạm sai lầm",
+      "NHẬN RA / PHÁT HIỆN RA ĐIỀU GÌ",
+      "Quên mất lỗi sai",
+      "Bị người khác trách mắng"
+    ],
+    correct: 1,
+    explain: "N4: 気がつく = Tự mình nhận ra, phát giác điều gì."
+  },
+  {
+    category: "Cụm Cố Định",
+    grammar: "気にする (きにする)",
+    example: "VD: そんな小さな失敗は気にしないでください。",
+    options: [
+      "Hãy chú ý cẩn thận đi",
+      "BẬN TÂM / ĐỂ Ý / LO NGHĨ QUÁ MỨC",
+      "Tôi rất thích sai lầm này",
+      "Làm hỏng mọi chuyện"
+    ],
+    correct: 1,
+    explain: "N4: 気にする = Bận lòng, lo lắng để bụng."
+  },
+  {
+    category: "Cụm Cố Định",
+    grammar: "興味がある (きょうみがある)",
+    example: "VD: 日本の歴史に興味があります。",
+    options: [
+      "Không biết gì về lịch sử",
+      "CÓ HỨNG THÚ / QUAN TÂM ĐẾN ĐIỀU GÌ",
+      "Thấy lịch sử rất chán",
+      "Là chuyên gia nghiên cứu lịch sử"
+    ],
+    correct: 1,
+    explain: "Minna Bài 27: [N] に + 興味がある = Có sự quan tâm, say mê."
+  },
+  {
+    category: "Cụm Cố Định",
+    grammar: "世話をする (せわをする)",
+    example: "VD: 毎朝犬の世話をします。",
+    options: [
+      "Bán chó đi nơi khác",
+      "CHĂM SÓC / TRÔNG NOM / GIÚP ĐỠ",
+      "Nhờ người khác nuôi chó",
+      "Bỏ mặc không quan tâm"
+    ],
+    correct: 1,
+    explain: "Minna Bài 48: 世話をする = Chăm nom, săn sóc."
+  },
+
+  // 141-150: PHÓ TỪ & CỤM KẾT THÚC CỐ ĐỊNH N4
+  {
+    category: "Cụm Cố Định",
+    grammar: "間に合う (まにあう)",
+    example: "VD: 急いだので、新幹線に間に合いました。",
+    options: [
+      "Bị lỡ chuyến tàu Shinkansen",
+      "KỊP GIỜ / KỊP THỜI GIAN",
+      "Tàu Shinkansen bị hỏng",
+      "Không kịp lên tàu"
+    ],
+    correct: 1,
+    explain: "Minna Bài 26: 間に合う = Kịp thời gian quy định."
+  },
+  {
+    category: "Cụm Cố Định",
+    grammar: "遅れる (おくれる)",
+    example: "VD: 約束の時間に遅れてしまいました。",
+    options: [
+      "Đến sớm hơn giờ hẹn",
+      "BỊ MUỘN / BỊ TRỄ GIỜ",
+      "Đến đúng giờ hẹn",
+      "Hủy bỏ cuộc hẹn"
+    ],
+    correct: 1,
+    explain: "Minna Bài 26: 〜に遅れる = Trễ hẹn, muộn giờ."
+  },
+  {
+    category: "Cụm Cố Định",
+    grammar: "遠慮する (えんりょする)",
+    example: "VD: 遠慮しないで、たくさん食べてください。",
+    options: [
+      "Đừng ăn nhiều quá",
+      "KHÁCH KHÍ / NGẠI NGÙNG / E DÈ",
+      "Hãy ăn thật nhanh lên",
+      "Bắt buộc phải ăn hết"
+    ],
+    correct: 1,
+    explain: "Minna Bài 49: 遠慮する = Khách sáo, giữ kẽ, e ngại."
+  },
+  {
+    category: "Cụm Cố Định",
+    grammar: "無理をする (むりをする)",
+    example: "VD: 体調が悪いなら、無理をしないでください。",
+    options: [
+      "Cố làm thêm việc đi",
+      "LÀM QUÁ SỨC / GƯỢNG ÉP BẢN THÂN",
+      "Uống thuốc ngay đi",
+      "Đi ngủ một giấc sâu"
+    ],
+    correct: 1,
+    explain: "Minna Bài 32: 無理をする = Gắng gượng quá mức chịu đựng."
+  },
+  {
+    category: "Phó Từ Tần Suất",
+    grammar: "なかなか〜ない (Ví dụ: なかなか来ない)",
+    example: "VD: バスがなかなか来ません。",
+    options: [
+      "Xe buýt đến rất nhanh",
+      "MÃI MÀ CHẲNG... (luôn đi với phủ định)",
+      "Xe buýt vừa mới chạy qua",
+      "Xe buýt luôn đúng giờ"
+    ],
+    correct: 1,
+    explain: "Minna Bài 27: なかなか + V-nai = Mãi mà việc mong đợi không diễn ra."
+  },
+  {
+    category: "Phó Từ Triệt Để",
+    grammar: "ぜんぜん〜ない (Ví dụ: ぜんぜん分からない)",
+    example: "VD: 英語がぜんぜん分かりません。",
+    options: [
+      "Hiểu rất rõ tiếng Anh",
+      "HOÀN TOÀN KHÔNG... MỘT CHÚT NÀO (phủ định sạch trơn)",
+      "Chỉ hiểu được một chút ít",
+      "Đang học tiếng Anh rất chăm"
+    ],
+    correct: 1,
+    explain: "Minna Bài 9: 全然 + V-nai = Hoàn toàn không chút nào."
+  },
+  {
+    category: "Phó Từ Giảm Nhẹ",
+    grammar: "あまり〜ない (Ví dụ: あまり食べない)",
+    example: "VD: 甘いものはあまり食べません。",
+    options: [
+      "Rất thích ăn đồ ngọt",
+      "KHÔNG... LẮM (mức độ thấp, phủ định một phần)",
+      "Tuyệt đối không bao giờ ăn",
+      "Mỗi ngày đều ăn đồ ngọt"
+    ],
+    correct: 1,
+    explain: "Minna Bài 8: あまり + V-nai = Không nhiều lắm."
+  },
+  {
+    category: "Phó Từ Nhiệt Tình",
+    grammar: "ぜひ (Ví dụ: ぜひ遊びに来てください)",
+    example: "VD: 日本へ行ったら、ぜひ京都へ行きたいです。",
+    options: [
+      "Có lẽ sẽ không đi Kyoto",
+      "NHẤT ĐỊNH / RẤT MONG MUỐN (nhấn mạnh ý muốn hoặc lời mời tha thiết)",
+      "Tùy tiện thế nào cũng xong",
+      "Chắc chắn người khác sẽ đi"
+    ],
+    correct: 1,
+    explain: "Minna Bài 13: ぜひ = Đi với 〜たい hoặc 〜てください (Nhất định muốn làm / Mời nhiệt tình)."
+  },
+  {
+    category: "Phó Từ Tin Tưởng",
+    grammar: "きっと (Ví dụ: きっと合格する)",
+    example: "VD: 彼はきっと約束を守るでしょう。",
+    options: [
+      "Anh ấy chắc chắn thất hứa",
+      "CHẮC CHẮN / NHẤT ĐỊNH LÀ... (phán đoán có niềm tin rất cao)",
+      "Có lẽ anh ấy sẽ quên",
+      "Không ai biết trước điều gì"
+    ],
+    correct: 1,
+    explain: "Minna Bài 32: きっと = Dự đoán với niềm tin gần như tuyệt đối."
+  },
+  {
+    category: "Phó Từ Vừa Vặn",
+    grammar: "ちょうど (Ví dụ: ちょうどいい)",
+    example: "VD: この靴のサイズはちょうどいいです。",
+    options: [
+      "Đôi giày này bị chật",
+      "VỪA ĐÚNG / CHÍNH XÁC / VỪA KHÍT (thời gian, kích cỡ)",
+      "Đôi giày này quá rộng",
+      "Không đi vừa giày"
+    ],
+    correct: 1,
+    explain: "Minna Bài 46: ちょうど = Vừa chuẩn boong, đúng thời điểm/kích thước."
+  }
+];
+
+let currentIndex = 0;
+let score = 0;
+let answered = false;
+
+// DOM Elements
+const categoryBadge = document.getElementById('categoryBadge');
+const scoreTracker = document.getElementById('scoreTracker');
+const progressBar = document.getElementById('progressBar');
+const grammarText = document.getElementById('grammarText');
+const exampleText = document.getElementById('exampleText');
+const optionsGrid = document.getElementById('optionsGrid');
+const explanationBox = document.getElementById('explanationBox');
+const explanationText = document.getElementById('explanationText');
+const nextBtn = document.getElementById('nextBtn');
+const quizBlock = document.getElementById('quizBlock');
+const resultBlock = document.getElementById('resultBlock');
+const finalScoreText = document.getElementById('finalScoreText');
+
+function loadQuestion() {
+  answered = false;
+  const q = quizData[currentIndex];
+
+  categoryBadge.textContent = q.category;
+  scoreTracker.textContent = `Câu: ${currentIndex + 1}/${quizData.length}`;
+  progressBar.style.width = `${((currentIndex) / quizData.length) * 100}%`;
+
+  grammarText.textContent = q.grammar;
+  exampleText.textContent = q.example;
+
+  optionsGrid.innerHTML = '';
+  explanationBox.style.display = 'none';
+  nextBtn.style.display = 'none';
+
+  q.options.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span>${String.fromCharCode(65 + idx)}. ${opt}</span>`;
+    btn.onclick = () => selectOption(idx);
+    optionsGrid.appendChild(btn);
+  });
+}
+
+function selectOption(selectedIdx) {
+  if (answered) return;
+  answered = true;
+
+  const q = quizData[currentIndex];
+  const buttons = optionsGrid.querySelectorAll('.option-btn');
+
+  buttons.forEach((b, idx) => {
+    b.disabled = true;
+    if (idx === q.correct) {
+      b.classList.add('correct');
+    }
+  });
+
+  if (selectedIdx === q.correct) {
+    score++;
+  } else {
+    buttons[selectedIdx].classList.add('wrong');
+  }
+
+  explanationText.textContent = q.explain;
+  explanationBox.style.display = 'block';
+  nextBtn.style.display = 'inline-block';
+}
+
+function nextQuestion() {
+  currentIndex++;
+  if (currentIndex < quizData.length) {
+    loadQuestion();
+  } else {
+    showResults();
+  }
+}
+
+function showResults() {
+  progressBar.style.width = '100%';
+  quizBlock.style.display = 'none';
+  resultBlock.style.display = 'block';
+
+  const percentage = Math.round((score / quizData.length) * 100);
+  finalScoreText.innerHTML = `Bạn đạt <strong>${score}/${quizData.length}</strong> cấu trúc (${percentage}%)!<br><br>` +
+    (percentage >= 90 ? "🔥 Quá xuất sắc! Bạn đã làm chủ trọn vẹn toàn bộ 150 cấu trúc N4 - N5 và Minna no Nihongo." :
+     percentage >= 75 ? "👍 Rất vững! Hãy xem lại các câu bị sai ở nhóm Kính ngữ và Trợ từ giới hạn." :
+     "⚠️ Hãy luyện tập lại một lượt nữa để biến 150 cấu trúc này thành phản xạ vô điều kiện!");
+}
+
+function restartQuiz() {
+  currentIndex = 0;
+  score = 0;
+  resultBlock.style.display = 'none';
+  quizBlock.style.display = 'block';
+  loadQuestion();
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>
